@@ -45,3 +45,19 @@ button {
         background-color: $color-primary-active;
     }
 }
+
+
+// link
+a {
+    text-decoration: none;
+    color: $color-text;
+
+    &:hover, &:focus {
+        color: $color-primary-hover;
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: $color-primary-active;
+    } 
+}
