@@ -1,10 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/styles/fonts.scss' ;
 
+// variables
+$color-text: #FFFFFF;
+$color-primary: #2E3EDF;
+$color-primary-hover: #979FEF;
+$color-primary-active: #7611FF;
+
+
 :root {
-    $text-color: #FFFFFF;
     font-family: 'DM Sans', sans-serif;
-    color: $text-color; 
+    color: $color-text; 
 }
 
 
@@ -12,4 +18,30 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+
+// button
+button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary { //blue
+    background-color: $color-primary;
+    color: $color-text;
+    padding: 12px 24px;
+    border-radius: 40px;
+    display: inline-flex;
+    gap: 4px;
+
+    &:hover, &:focus {
+        background-color: $color-primary-hover;
+    }
+
+    &:active {
+        background-color: $color-primary-active;
+    }
 }
