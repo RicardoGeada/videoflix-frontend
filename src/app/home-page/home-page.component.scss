@@ -1,3 +1,6 @@
+@import '../../assets/styles/colors.scss';
+
+
 $background-image-url: url("./../../assets/img/home-page/home-page-background.jpg");
 $background-gradient: linear-gradient(
   to bottom,
@@ -18,3 +21,53 @@ $background-gradient: linear-gradient(
   background-position: center;
   background-repeat: no-repeat;
 }
+
+
+.home-page-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  gap: 24px;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 62.5px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 31.25px;
+}
+
+p {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23.44px;
+}
+
+.sign-up-container {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+
+  input {
+    background-color: transparent;
+    border-radius: 40px;
+    padding: 12px 24px;
+    color: $color-text;
+    border: 1px solid $color-text;
+    width: 360px;
+
+    &::placeholder {
+      color: $color-text;
+    }
+  }
+}
+
+

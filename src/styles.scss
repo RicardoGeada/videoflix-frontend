@@ -1,11 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/styles/fonts.scss' ;
-
-// variables
-$color-text: #FFFFFF;
-$color-primary: #2E3EDF;
-$color-primary-hover: #979FEF;
-$color-primary-active: #7611FF;
+@import './assets/styles/colors.scss';
 
 
 :root {
@@ -35,7 +30,10 @@ button {
     padding: 12px 24px;
     border-radius: 40px;
     display: inline-flex;
+    align-items: center;
     gap: 4px;
+
+    font-size: 18px;
 
     &:hover, &:focus {
         background-color: $color-primary-hover;
