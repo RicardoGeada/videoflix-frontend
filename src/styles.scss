@@ -1,1 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
+@import './assets/styles/fonts.scss' ;
+@import './assets/styles/colors.scss';
+
+
+:root {
+    font-family: 'DM Sans', sans-serif;
+    color: $color-text; 
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+// button
+button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.btn-primary { //blue
+    background-color: $color-primary;
+    color: $color-text;
+    padding: 12px 24px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    font-size: 18px;
+
+    &:hover, &:focus {
+        background-color: $color-primary-hover;
+    }
+
+    &:active {
+        background-color: $color-primary-active;
+    }
+}
+
+
+// link
+a {
+    text-decoration: none;
+    color: $color-text;
+
+    &:hover, &:focus {
+        color: $color-primary-hover;
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: $color-primary-active;
+    } 
+}
