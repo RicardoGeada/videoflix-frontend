@@ -11,4 +11,12 @@ import { FooterComponent } from '../shared/components/footer/footer.component';
 })
 export class LoginPageComponent {
 
+  passwordImageSource = "visibility.svg"
+
+  togglePasswordVisibility(passwordInput : HTMLInputElement) {
+    passwordInput.type == "password" ? passwordInput.type = "text" : passwordInput.type = "password";
+    passwordInput.type == "password" ? this.passwordImageSource = "visibility.svg" : this.passwordImageSource = "visibility-off.svg";
+
+  }
+
 }

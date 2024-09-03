@@ -12,8 +12,11 @@
           </div>
           <!-- password field -->
           <div class="password-field-container">
-            <input type="password" name="password" id="password" placeholder="Password" required />
-            <img src="/assets/img/general/visibility.svg" alt="visibility" class="visibility-icon">
+            <input type="password" name="password" id="password" placeholder="Password" required #password/>
+            <button type="button" (click)="togglePasswordVisibility(password)">
+              <img [src]="'/assets/img/general/' + passwordImageSource" alt="visibility" class="visibility-icon">
+            </button>
+            
           </div>
           <!-- remember-me field -->
           <div class="remember-me-field-container">
