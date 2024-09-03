@@ -1,0 +1,178 @@
+@import "../../assets/styles/colors.scss";
+
+$background-image-url: url("./../../assets/img/login-page/login-page-background.jpg");
+$background-gradient: linear-gradient(
+  to bottom,
+  rgba(0, 0, 0, 1),
+  rgba(0, 0, 0, 0.55),
+  rgba(0, 0, 0, 1)
+);
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
+
+  // background image
+  background-image: $background-gradient, $background-image-url;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0px 16px;
+}
+
+.login-page-container {
+  width: 100%;
+  max-width: 520px;
+  background-color: $color-text;
+  border-radius: 48px;
+  padding: 43px 56px;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 62.5px;
+  text-align: center;
+  color: $color-primary;
+  margin-bottom: 32px;
+}
+
+input {
+  border: none;
+  color: $color-primary;
+  outline: none;
+  width: 100%;
+  padding: 12px 24px;
+  border: 1px solid $color-primary;
+  border-radius: 12px;
+  font-size: 18px;
+
+  &::placeholder {
+    color: $color-primary;
+  }
+
+  &:hover,
+  &:focus {
+    border-color: $color-primary-hover;
+  }
+}
+
+.email-field-container {
+  margin-bottom: 32px;
+}
+
+.password-field-container {
+  position: relative;
+  margin-bottom: 16px;
+  input {
+    padding: 12px 56px 12px 24px;
+  }
+
+  .visibility-icon {
+    position: absolute;
+    right: 24px;
+    top: 12px;
+  }
+}
+
+.remember-me-field-container {
+  color: black;
+  margin-bottom: 32px;
+
+  .custom-checkbox {
+    display: inline-block;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      height: 12px;
+      width: 12px;
+      border: 1px solid $color-primary;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    &:hover input ~ .checkmark {
+      border-color: $color-primary-hover;
+      background-color: $color-primary-hover;
+    }
+
+    input:checked ~ .checkmark {
+      background-color: $color-primary;
+    }
+
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    .checkmark:after {
+      left: 4.75px;
+      top: 6px;
+      width: 2px;
+      height: 5px;
+      border: solid white;
+      border-width: 0 1px 1px 0;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.forgot-password-container,
+.sign-up-container {
+  color: black;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 16px;
+
+  span {
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page-container {
+    padding: 43px 24px;
+  }
+
+  .sign-up-container {
+    gap: 16px;
+    span {
+      font-size: 16px;
+    }
+  }
+}
+

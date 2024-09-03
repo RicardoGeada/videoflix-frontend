@@ -1,0 +1,47 @@
+<app-header></app-header>
+
+<div class="login-page-content">
+    <div class="login-page-container">
+
+        <h1>Log in</h1>
+
+        <form action="" method="post">
+          <!-- email field -->
+          <div class="email-field-container">
+            <input type="email" name="email" id="email" placeholder="Email Address" required />
+          </div>
+          <!-- password field -->
+          <div class="password-field-container">
+            <input type="password" name="password" id="password" placeholder="Password" required #password/>
+            <button type="button" (click)="togglePasswordVisibility(password)">
+              <img [src]="'/assets/img/general/' + passwordImageSource" alt="visibility" class="visibility-icon">
+            </button>
+            
+          </div>
+          <!-- remember-me field -->
+          <div class="remember-me-field-container">
+            <label class="custom-checkbox">
+              <input type="checkbox" name="rememberMe" id="rememberMe"/>
+              <span class="checkmark"></span>
+              <span>Remember me</span>
+            </label>
+          </div>
+          <!-- submit button -->
+          <div class="submit-button-container">
+           <button type="submit" class="btn-primary">Log in</button>
+          </div>
+        </form>
+
+        <div class="forgot-password-container">
+          <a href="/forgotpassword" class="link-primary">Forgot password?</a>
+        </div>
+        <div class="sign-up-container">
+          <span>New to Videoflix?</span>
+          <a href="/signup" class="link-primary">Sign Up now</a>
+        </div>
+       
+      </div>
+</div>
+
+
+<app-footer></app-footer>
