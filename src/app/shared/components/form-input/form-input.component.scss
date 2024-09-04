@@ -1,0 +1,38 @@
+@import "./../../../../assets/styles/colors.scss";
+
+:host {
+    width: 100%;
+}
+
+input {
+  border: none;
+  color: $color-primary;
+  outline: none;
+  width: 100%;
+  padding: 12px 24px;
+  border: 1px solid $color-primary;
+  border-radius: 12px;
+  font-size: 18px;
+
+  &::placeholder {
+    color: $color-primary;
+  }
+
+  &:hover,
+  &:focus {
+    border-color: $color-primary-hover;
+  }
+}
+
+.password-field-container {
+    position: relative;
+    input {
+      padding: 12px 56px 12px 24px;
+    }
+  
+    .visibility-icon {
+      position: absolute;
+      right: 24px;
+      top: 12px;
+    }
+  }

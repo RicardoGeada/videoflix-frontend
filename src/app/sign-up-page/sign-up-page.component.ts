@@ -5,18 +5,16 @@ import { FooterComponent } from '../shared/components/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordsMatchValidator } from './validators/passwordsMatch.validator';
+import { FormInputComponent } from '../shared/components/form-input/form-input.component';
 
 @Component({
   selector: 'app-sign-up-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule],
+  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, FormInputComponent],
   templateUrl: './sign-up-page.component.html',
   styleUrl: './sign-up-page.component.scss'
 })
 export class SignUpPageComponent {
-
-  passwordImageSource = { value: "visibility.svg" };
-  confirmPasswordImageSource = { value: "visibility.svg" };
 
   form: FormGroup;
 
@@ -28,13 +26,6 @@ export class SignUpPageComponent {
     }, {
       validator: passwordsMatchValidator('password', 'confirmPassword')
     } as AbstractControlOptions);
-  }
-
-
-  togglePasswordVisibility(passwordInput : HTMLInputElement) {
-    let imgSrc = passwordInput.id == "password" ? this.passwordImageSource : this.confirmPasswordImageSource;
-    passwordInput.type == "password" ? passwordInput.type = "text" : passwordInput.type = "password";
-    passwordInput.type == "password" ?  imgSrc.value = "visibility.svg" :  imgSrc.value = "visibility-off.svg";
   }
 
 

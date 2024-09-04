@@ -6,38 +6,29 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- email field -->
-      <div class="email-field-container">
-        <input type="email" name="email" id="email" placeholder="Email Address" formControlName="email"/>
-        <!-- @if (form.get('email')?.touched && form.get('email')?.hasError('required')) {
-          <div class="error-message">
-            <img src="/assets/img/general/warning.svg" alt="warning">
-            Email is required.
-          </div>
-        } -->
-      </div>
-     
+       <app-form-input
+          [form]="form"
+          controlName="email"
+          type="email"
+          placeholder="Email Address"
+       ></app-form-input> 
      
       <!-- password field -->
-      <div class="password-field-container">
-        <input type="password" name="password" id="password" placeholder="Enter a password" #password formControlName="password"/>
-        <button type="button" (click)="togglePasswordVisibility(password)">
-          <img [src]="'/assets/img/general/' + passwordImageSource.value" alt="visibility" class="visibility-icon">
-        </button> 
-      </div>
+      <app-form-input
+        [form]="form"
+        controlName="password"
+        type="password"
+        placeholder="Enter a password"
+      ></app-form-input>
+
       <!-- confirm password field -->
-      <div class="password-field-container">
-        <input type="password" name="password" id="confirmPassword" placeholder="Confirm Password" #confirmpassword formControlName="confirmPassword"/>
-        <button type="button" (click)="togglePasswordVisibility(confirmpassword)">
-          <img [src]="'/assets/img/general/' + confirmPasswordImageSource.value" alt="visibility" class="visibility-icon">
-        </button>
-        @if (passwordsMismatch()) {
-          <div class="error-message">
-            <img src="/assets/img/general/warning.svg" alt="warning">
-            Passwords must match.
-          </div> 
-        }
-        
-      </div>
+      <app-form-input
+        [form]="form"
+        controlName="confirmPassword"
+        type="password"
+        placeholder="Confirm Password"
+      ></app-form-input>
+
       <!-- submit button -->
       <div class="submit-button-container">
         <button type="submit" class="btn-primary">Get Started</button>
