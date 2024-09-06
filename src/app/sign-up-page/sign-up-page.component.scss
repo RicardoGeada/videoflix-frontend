@@ -55,5 +55,9 @@ h1 {
 }
 
 
-
+@media (max-width: 480px) {
+  .sign-up-page-container {
+    padding: 43px 24px;
+  }
+}
 
