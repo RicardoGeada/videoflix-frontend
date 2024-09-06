@@ -1,0 +1,63 @@
+@import "../../assets/styles/colors.scss";
+
+$background-image-url: url("./../../assets/img/sign-up-page/signup-page-background.jpg");
+$background-gradient: linear-gradient(
+  to bottom,
+  rgba(0, 0, 0, 0.8),
+  rgba(0, 0, 0, 0.44),
+  rgba(0, 0, 0, 0.8)
+);
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
+
+  // background image
+  background-image: $background-gradient, $background-image-url;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.sign-up-page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0px 16px;
+}
+
+.sign-up-page-container {
+  width: 100%;
+  max-width: 520px;
+  background-color: $color-text;
+  border-radius: 48px;
+  padding: 43px 56px;
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 62.5px;
+  text-align: center;
+  color: $color-primary;
+  margin-bottom: 32px;
+}
+
+
+@media (max-width: 480px) {
+  .sign-up-page-container {
+    padding: 43px 24px;
+  }
+}
+

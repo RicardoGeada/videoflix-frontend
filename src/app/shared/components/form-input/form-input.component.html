@@ -1,0 +1,20 @@
+<div [class]="type + '-field-container'" [formGroup]="form">
+
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [formControlName]="controlName"
+    [attr.id]="controlName"
+    #formInput
+  />
+
+  @if(type == 'password') {
+    <button type="button" (click)="togglePasswordVisibility(formInput)">
+        <img [src]="'/assets/img/general/' + passwordImgSrc" alt="visibility" class="visibility-icon">
+    </button> 
+  }
+  
+  @if (form.get(controlName)?.touched && form.get(controlName)?.errors) {
+    <app-form-error [errorType]="getErrorType()"></app-form-error>
+  }
+</div>

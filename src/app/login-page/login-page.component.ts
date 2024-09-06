@@ -16,7 +16,6 @@ export class LoginPageComponent {
   togglePasswordVisibility(passwordInput : HTMLInputElement) {
     passwordInput.type == "password" ? passwordInput.type = "text" : passwordInput.type = "password";
     passwordInput.type == "password" ? this.passwordImageSource = "visibility.svg" : this.passwordImageSource = "visibility-off.svg";
-
   }
 
 }

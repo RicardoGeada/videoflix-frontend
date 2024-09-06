@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+<div class="sign-up-page-content">
+  <div class="sign-up-page-container">
+    <h1>Sign Up</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- email field -->
+       <app-form-input
+          [form]="form"
+          controlName="email"
+          type="email"
+          placeholder="Email Address"
+       ></app-form-input> 
+     
+      <!-- password field -->
+      <app-form-input
+        [form]="form"
+        controlName="password"
+        type="password"
+        placeholder="Enter a password"
+      ></app-form-input>
+
+      <!-- confirm password field -->
+      <app-form-input
+        [form]="form"
+        controlName="confirmPassword"
+        type="password"
+        placeholder="Confirm Password"
+      ></app-form-input>
+
+      <!-- submit button -->
+      <div class="submit-button-container">
+        <button type="submit" class="btn-primary">Get Started</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>
