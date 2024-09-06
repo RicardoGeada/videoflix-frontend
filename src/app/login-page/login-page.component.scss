@@ -164,6 +164,11 @@ input {
 }
 
 @media (max-width: 480px) {
+  h1 {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
   .login-page-container {
     padding: 43px 24px;
   }
