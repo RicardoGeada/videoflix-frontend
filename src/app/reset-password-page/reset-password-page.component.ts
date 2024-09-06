@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   AbstractControlOptions,
   FormBuilder,
+  FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { FormInputComponent } from '../shared/components/form-input/form-input.component';
-import { passwordsMatchValidator } from './validators/passwordsMatch.validator';
+import { passwordsMatchValidator } from '../sign-up-page/validators/passwordsMatch.validator';
 
 @Component({
-  selector: 'app-sign-up-page',
+  selector: 'app-reset-password-page',
   standalone: true,
   imports: [
     HeaderComponent,
@@ -20,16 +21,15 @@ import { passwordsMatchValidator } from './validators/passwordsMatch.validator';
     ReactiveFormsModule,
     FormInputComponent,
   ],
-  templateUrl: './sign-up-page.component.html',
-  styleUrl: './sign-up-page.component.scss',
+  templateUrl: './reset-password-page.component.html',
+  styleUrl: './reset-password-page.component.scss',
 })
-export class SignUpPageComponent {
+export class ResetPasswordPageComponent {
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group(
       {
-        email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required]],
         confirmPassword: ['', [Validators.required]],
       },
