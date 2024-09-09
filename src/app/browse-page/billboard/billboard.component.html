@@ -1,4 +1,4 @@
-<div class="billboard-container">
+<div class="billboard-container" (mouseenter)="playVideo()" (mouseleave)="stopVideo()" (touchstart)="playVideo()" (touchend)="stopVideo()">
   <div class="billboard-video-info-container">
     <h1>The Secret Life of Turtles</h1>
     <p>
@@ -13,7 +13,7 @@
     </button>
   </div>
 
-  <video class="billboard-video">
+  <video class="billboard-video" #billboardVideo muted>
     <source
       src="assets/videos/the_secret_life_of_turtles.mp4"
       type="video/mp4"
