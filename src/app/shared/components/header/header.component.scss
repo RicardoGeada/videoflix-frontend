@@ -1,7 +1,12 @@
 :host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     padding: 38px 96px;
+    z-index: 999;
 }
 
 @media (max-width: 640px) {

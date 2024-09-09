@@ -1,16 +1,8 @@
 :host {
     margin-top: auto;
-    margin-bottom: 40px;
     width: 100%;
     display: inline-flex;
     justify-content: center;
     gap: 48px;
-    padding: 10px;
-}
-
-@media (max-width: 768px) {
-    :host {
-        margin-top: 32px;
-        margin-bottom: 32px;
-    }
+    padding: 32px 16px;
 }
