@@ -1,0 +1,17 @@
+<h2>Category</h2>
+<div class="slider-container">
+    <!-- slider control -->
+    <div class="slider-control-left" (click)="slideLeft()"><</div>
+    <div class="slider-control-right" (click)="slideRight()">></div>
+
+    <div class="slider" #slider>
+        @for (video of videos; track video) {
+            <div class="slider-item">
+                <img class="cover-img" src="" alt="{{ video }}">
+            </div>
+        }
+    </div>
+
+
+
+</div>
