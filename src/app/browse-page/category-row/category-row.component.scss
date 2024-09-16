@@ -34,10 +34,8 @@
 
 .slider {
   --itemsInRow: 0;
-  --sliderIndex: 0;
   display: flex;
   flex-wrap: nowrap;
-  transform: translateX(calc(var(--sliderIndex) * -100%));
   transition: transform 250ms ease-in-out;
 }
 

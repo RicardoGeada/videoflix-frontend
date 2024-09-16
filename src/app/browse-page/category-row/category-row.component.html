@@ -1,17 +1,45 @@
 <h2>Category</h2>
 <div class="slider-container">
-    <!-- slider control -->
-    <div class="slider-control-left" (click)="slideLeft()"><</div>
-    <div class="slider-control-right" (click)="slideRight()">></div>
+  <!-- slider control -->
+  @if (slided) {
+  <div class="slider-control-left" (click)="slideLeft()"><</div>
+  }
 
-    <div class="slider" #slider>
-        @for (video of videos; track video) {
+  <div class="slider-control-right" (click)="slideRight()">></div>
+
+  <div class="slider" #slider [style]=" {'transform' : slided ? 'translateX(-' + (100 + (1 / itemsInRow) * 100) + '%)' : ''}">
+    @if(slided) {
+        <!-- render row before + 1 -->
+        @for (item of itemsbefore(); track item) {
+            @for (video of videos; track video; let index = $index) {
+                @if(item == index) {
+                    <div class="slider-item" style="background-color: orange;">
+                        <img class="cover-img" src="" alt="{{ video + '-before-' + index }}" />
+                    </div>
+                }
+            }
+        }
+    } 
+
+    <!-- render row -->
+    @for (video of videos; track video; let index = $index) {
+        @if(firstItemInRow <= index  && index < firstItemInRow + itemsInRow) {
             <div class="slider-item">
-                <img class="cover-img" src="" alt="{{ video }}">
+                <img class="cover-img" src="" alt="{{ video + '-mid-' + index }}" />
             </div>
         }
-    </div>
+    }
+    <!-- render row after + 1  -->
+    @for (item of itemsafter(); track item) {
+        @for (video of videos; track video; let index = $index) {
+            @if(item == index) {
+                <div class="slider-item" style="background-color: blue">
+                    <img class="cover-img" src="" alt="{{ video + '-after-' + index }}" />
+                </div>
+            }
+        }
+    }
 
 
-
+  </div>
 </div>

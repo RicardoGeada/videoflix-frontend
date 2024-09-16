@@ -4,6 +4,7 @@ import {
   Input,
   ViewChild,
   HostListener,
+  ChangeDetectorRef
 } from '@angular/core';
 
 @Component({
@@ -20,11 +21,15 @@ export class CategoryRowComponent {
   sliderIndex = 0;
   itemsInRow = 1;
   totalPages = 1;
+  slided = false;
+  firstItemInRow = 0;
 
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.updateItemsInRow();
     this.calculateTotalPages();
+    this.cdr.detectChanges();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -46,19 +51,62 @@ export class CategoryRowComponent {
   }
 
 
-
-  setSliderIndex() {
-    const slider = this.slider.nativeElement;
-    slider.style.setProperty('--sliderIndex', this.sliderIndex.toString());
-  }
-
   slideLeft() {
+    
+    if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex == 0) {
+      this.firstItemInRow = this.videos.length - this.itemsInRow;
+    } else if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex > 0) {
+      this.firstItemInRow = 0;
+    } else {
+      this.firstItemInRow -= this.itemsInRow;
+    }
+
+    this.slided = true;
     this.sliderIndex == 0 ? this.sliderIndex = this.totalPages - 1 : this.sliderIndex--;
-    this.setSliderIndex();
+    
+    console.log(this.firstItemInRow);
   }
 
   slideRight() {
+
+    if (this.sliderIndex == this.totalPages - 2) {
+      this.firstItemInRow = this.videos.length - this.itemsInRow;
+    } else if (this.sliderIndex == this.totalPages - 1) {
+      this.firstItemInRow = 0;
+    } else {
+      this.firstItemInRow += this.itemsInRow;
+    }
+
+
+    this.slided = true;
     this.sliderIndex == this.totalPages - 1 ? this.sliderIndex = 0 : this.sliderIndex++;
-    this.setSliderIndex();
+    console.log(this.firstItemInRow);
   }
+
+
+  itemsbefore() { 
+    let itemsbefore = [];
+    for (let i = -(this.itemsInRow + 1); i < 0; i++) { 
+      let item;
+      if (i + this.firstItemInRow < 0) item = this.videos.length + (i + this.firstItemInRow); 
+      else item = this.firstItemInRow + i
+      itemsbefore.push(item); 
+    }
+    return itemsbefore;
+  } 
+  
+
+  itemsafter() {
+    const endPos = this.firstItemInRow + (this.itemsInRow - 1) 
+    let itemsafter = [];
+    for (let i = 1; i <= (this.itemsInRow + 1) ; i++) { 
+      let item;
+      if (endPos + i >= this.videos.length) item = (endPos + i) % this.videos.length; 
+      else item = this.firstItemInRow + this.itemsInRow - 1 + i ;
+      itemsafter.push(item);
+    }
+    return itemsafter;
+  } 
+
+
 }
