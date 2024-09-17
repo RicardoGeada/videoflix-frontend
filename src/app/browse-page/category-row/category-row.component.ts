@@ -36,6 +36,7 @@ export class CategoryRowComponent {
   onResize(event: Event) {
     this.updateItemsInRow();
     this.calculateTotalPages();
+    this.updateSliderIndex();
   }
 
   updateItemsInRow() {
@@ -44,6 +45,12 @@ export class CategoryRowComponent {
     const itemsInRowValue = computedStyle.getPropertyValue('--itemsInRow');
 
     this.itemsInRow = parseInt(itemsInRowValue.trim(), 10) || 1;
+  }
+
+  updateSliderIndex() {
+    this.sliderIndex = Math.ceil(this.firstItemInRow / this.totalPages);
+    if (this.sliderIndex > this.totalPages - 1) this.sliderIndex = this.totalPages - 1;
+    console.log('sliderINdex', this.sliderIndex)
   }
 
   calculateTotalPages() {
@@ -89,11 +96,24 @@ export class CategoryRowComponent {
     for (let i = -(this.itemsInRow + 1); i < 0; i++) { 
       let item;
       if (i + this.firstItemInRow < 0) item = this.videos.length + (i + this.firstItemInRow); 
-      else item = this.firstItemInRow + i
+      else item = this.firstItemInRow + i;
       itemsbefore.push(item); 
     }
     return itemsbefore;
   } 
+
+
+  itemsShown() {
+    let items = [];
+    for (let i = this.firstItemInRow; i < this.firstItemInRow + this.itemsInRow; i++) {
+      let item;
+      // if (i >= this.videos.length) item = i % this.videos.length;
+      // else item = i;
+      item = i % this.videos.length;
+      items.push(item);
+    }
+    return items;
+  }
   
 
   itemsafter() {
@@ -107,6 +127,5 @@ export class CategoryRowComponent {
     }
     return itemsafter;
   } 
-
 
 }

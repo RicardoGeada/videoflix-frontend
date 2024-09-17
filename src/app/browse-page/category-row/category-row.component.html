@@ -22,11 +22,13 @@
     } 
 
     <!-- render row -->
-    @for (video of videos; track video; let index = $index) {
-        @if(firstItemInRow <= index  && index < firstItemInRow + itemsInRow) {
-            <div class="slider-item">
-                <img class="cover-img" src="" alt="{{ video + '-mid-' + index }}" />
-            </div>
+    @for (item of itemsShown(); track item) {
+        @for (video of videos; track video; let index = $index) {
+            @if(item == index) {
+                <div class="slider-item">
+                    <img class="cover-img" src="" alt="{{ video + '-mid-' + index }}" />
+                </div>
+            }
         }
     }
     <!-- render row after + 1  -->
