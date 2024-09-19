@@ -58,6 +58,16 @@
 }
 
 
+.animate-slide {
+  transform: translateX(var(--translateX)) !important;
+  transition: transform 1000ms ease-in-out;
+}
+
+.no-transition {
+  transition: none !important;
+}
+
+
 
 @media (width > 1440px) {
   .slider {

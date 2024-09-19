@@ -24,6 +24,8 @@ export class CategoryRowComponent {
   slided = false;
   firstItemInRow = 0;
 
+  translateXValue = 0;
+
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
@@ -50,7 +52,6 @@ export class CategoryRowComponent {
   updateSliderIndex() {
     this.sliderIndex = Math.ceil(this.firstItemInRow / this.totalPages);
     if (this.sliderIndex > this.totalPages - 1) this.sliderIndex = this.totalPages - 1;
-    console.log('sliderINdex', this.sliderIndex)
   }
 
   calculateTotalPages() {
@@ -59,35 +60,79 @@ export class CategoryRowComponent {
 
 
   slideLeft() {
-    
-    if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex == 0) {
-      this.firstItemInRow = this.videos.length - this.itemsInRow;
-    } else if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex > 0) {
-      this.firstItemInRow = 0;
-    } else {
-      this.firstItemInRow -= this.itemsInRow;
+
+    let stepsToSlide = -this.itemsInRow; // 0 3 6 7 -> -3 3 1
+    let nextFirstPos = this.firstItemInRow - this.itemsInRow; // -2
+    if (nextFirstPos < 0 && (this.sliderIndex > 0)) { // -2 -1 0
+      for (let i = 0; nextFirstPos + i < 0; i++) { -1
+        stepsToSlide++; // 2 // 1
+      }
     }
 
-    this.slided = true;
-    this.sliderIndex == 0 ? this.sliderIndex = this.totalPages - 1 : this.sliderIndex--;
+    this.translateXValue = -((100 + (1/ this.itemsInRow) * 100) + (100 * stepsToSlide / this.itemsInRow));
+    this.slider.nativeElement.classList.add('animate-slide');
+
+    setTimeout(()=> {
+      this.slider.nativeElement.classList.remove('animate-slide');
+      this.slider.nativeElement.classList.add('no-transition');
+
+      if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex == 0) {
+        this.firstItemInRow = this.videos.length - this.itemsInRow;
+      } else if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex > 0) {
+        this.firstItemInRow = 0;
+      } else {
+        this.firstItemInRow -= this.itemsInRow;
+      }
+  
+      this.slided = true;
+      this.sliderIndex == 0 ? this.sliderIndex = this.totalPages - 1 : this.sliderIndex--;
+
+      setTimeout(() => {
+        this.slider.nativeElement.classList.remove('no-transition'); 
+      }, 50);
+    }, 1000)
     
-    console.log(this.firstItemInRow);
+
   }
 
   slideRight() {
 
-    if (this.sliderIndex == this.totalPages - 2) {
-      this.firstItemInRow = this.videos.length - this.itemsInRow;
-    } else if (this.sliderIndex == this.totalPages - 1) {
-      this.firstItemInRow = 0;
-    } else {
-      this.firstItemInRow += this.itemsInRow;
+    let stepsToSlide = this.itemsInRow; // 0 3 6 7 -> 3 3 1
+    let nextFirstPos = this.firstItemInRow + this.itemsInRow; // 9
+    let nextEndPos = nextFirstPos + this.itemsInRow - 1; // 11
+    if (nextEndPos >= this.videos.length && !(this.sliderIndex == this.totalPages - 1)) { // 9 10 11
+      for (let i = 0; nextEndPos - i >= this.videos.length; i++) {
+        stepsToSlide--; // 2 // 1
+      }
     }
 
+    this.translateXValue = this.slided ? -((100 + (1/ this.itemsInRow) * 100) + (100 * stepsToSlide / this.itemsInRow)) : -100;
+    this.slider.nativeElement.classList.add('animate-slide');
+     
 
-    this.slided = true;
-    this.sliderIndex == this.totalPages - 1 ? this.sliderIndex = 0 : this.sliderIndex++;
-    console.log(this.firstItemInRow);
+
+    setTimeout(()=> {
+      this.slider.nativeElement.classList.remove('animate-slide');
+      this.slider.nativeElement.classList.add('no-transition');
+
+      if (this.sliderIndex == this.totalPages - 2) {
+        this.firstItemInRow = this.videos.length - this.itemsInRow;
+      } else if (this.sliderIndex == this.totalPages - 1) {
+        this.firstItemInRow = 0;
+      } else {
+        this.firstItemInRow += this.itemsInRow;
+      }
+  
+      this.slided = true;
+      this.sliderIndex == this.totalPages - 1 ? this.sliderIndex = 0 : this.sliderIndex++;
+      setTimeout(() => {
+        this.slider.nativeElement.classList.remove('no-transition'); 
+      }, 50);
+    }, 1000)
+
+    
+
+
   }
 
 
