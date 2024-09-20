@@ -28,6 +28,7 @@ export class CategoryRowComponent {
   translateXValue = 0;
 
   private scrollTimeOut : boolean = false;
+  private defaultTouch = { x: 0, time: 0 };
 
 
   /**
@@ -306,7 +307,56 @@ export class CategoryRowComponent {
         this.scrollTimeOut = false;
       }, 1500);
     }
-
   }
+
+
+  /**
+   * HostListener for the touch event to trigger horizontal sliding.
+   * Slides left or right depending on the horizontal touch swipe direction.
+   * 
+   * @param {TouchEvent} event - The touch event.
+   */
+  @HostListener('touchstart', ['$event'])
+  @HostListener('touchend', ['$event'])
+  @HostListener('touchcancel', ['$event'])
+  touchSwipe(event : TouchEvent) {
+    let touch = event.touches[0] || event.changedTouches[0];
+
+    if (event.type === 'touchstart') {
+      this.defaultTouch.x = touch.pageX;
+      this.defaultTouch.time = event.timeStamp;
+    } else if (event.type === 'touchend') {
+      let deltaX = touch.pageX - this.defaultTouch.x;
+      let deltaTime = event.timeStamp - this.defaultTouch.time;
+
+      if (deltaTime < 500) {
+        if (Math.abs(deltaX) > 60) {
+
+          if (this.scrollTimeOut) {
+            return;
+          } else {
+
+            if (deltaX > 0 && !this.slided) {
+              return;
+            } else { 
+              this.scrollTimeOut = true;
+            }
+
+            if (deltaX < 0) {
+              this.slideRight();
+            } else {
+              this.slideLeft();
+            }
+
+            setTimeout(() => {
+              this.scrollTimeOut = false;
+            }, 1500);
+          }
+        }
+      }
+    }
+  }
+
+
 
 }
