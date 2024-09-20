@@ -14,7 +14,7 @@
             @for (video of videos; track video; let index = $index) {
                 @if(item == index) {
                     <div class="slider-item">
-                        <img class="cover-img" src="" alt="{{ video + '-before-' + index }}" />
+                        <img class="cover-img" src="" alt="{{ video  }}" />
                     </div>
                 }
             }
@@ -26,7 +26,7 @@
         @for (video of videos; track video; let index = $index) {
             @if(item == index) {
                 <div class="slider-item">
-                    <img class="cover-img" src="" alt="{{ video + '-mid-' + index }}" />
+                    <img class="cover-img" src="" alt="{{ video  }}" />
                 </div>
             }
         }
@@ -35,8 +35,8 @@
     @for (item of itemsafter(); track item) {
         @for (video of videos; track video; let index = $index) {
             @if(item == index) {
-                <div class="slider-item" style="background-color: blue;">
-                    <img class="cover-img" src="" alt="{{ video + '-after-' + index }}" />
+                <div class="slider-item">
+                    <img class="cover-img" src="" alt="{{ video }}" />
                 </div>
             }
         }

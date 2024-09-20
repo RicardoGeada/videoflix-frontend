@@ -1,7 +1,6 @@
 .slider-container {
   position: relative;
   padding: 0 4%;
-  background-color: red;
   touch-action: pan-y;
   overflow: hidden;
 }
@@ -13,7 +12,7 @@
   align-items: center;
   justify-content: center;
   width: 4%;
-  background-color: rgba(0, 128, 0, 0.696);
+  background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   top: 0;
   z-index: 2;

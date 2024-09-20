@@ -15,7 +15,9 @@ import {
   styleUrl: './category-row.component.scss',
 })
 export class CategoryRowComponent {
+
   @Input('categoryVideos') videos: any[] = [];
+
   @ViewChild('slider') slider!: ElementRef<HTMLDivElement>;
 
   sliderIndex = 0;
@@ -23,17 +25,33 @@ export class CategoryRowComponent {
   totalPages = 1;
   slided = false;
   firstItemInRow = 0;
-
   translateXValue = 0;
 
+
+  /**
+   * @constructor
+   * @param {ChangeDetectorRef} cdr - Service for manually triggering change detection.
+   */
   constructor(private cdr: ChangeDetectorRef) {}
 
+
+  /**
+   * Lifecycle hook called after the view has been initialized.
+   * Performs initializations such as updating items per row and calculating total pages.
+   */
   ngAfterViewInit() {
     this.updateItemsInRow();
     this.calculateTotalPages();
     this.cdr.detectChanges();
   }
 
+
+  /**
+   * HostListener for the window resize event.
+   * Updates the number of items per row, total pages, and adjusts the slider index accordingly.
+   * 
+   * @param {Event} event - The resize event.
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.updateItemsInRow();
@@ -41,41 +59,140 @@ export class CategoryRowComponent {
     this.updateSliderIndex();
   }
 
+
+  /**
+   * Updates the CSS property value of the CSS variable '--itemsInRow'
+   */
   updateItemsInRow() {
     const sliderElement = this.slider.nativeElement;
     const computedStyle = getComputedStyle(sliderElement);
     const itemsInRowValue = computedStyle.getPropertyValue('--itemsInRow');
-
     this.itemsInRow = parseInt(itemsInRowValue.trim(), 10) || 1;
   }
 
+
+  /**
+   * Updates the slider index after resizing.
+   */
   updateSliderIndex() {
     this.sliderIndex = Math.ceil(this.firstItemInRow / this.totalPages);
     if (this.sliderIndex > this.totalPages - 1) this.sliderIndex = this.totalPages - 1;
   }
 
+
+  /**
+   * Calculates the total number of pages based on the number of videos and items per row.
+   */
   calculateTotalPages() {
     this.totalPages = Math.ceil(this.videos.length / this.itemsInRow);
   }
 
 
+  /**
+   * Initiates the animation to slide the content to the left.
+   * Updates the slider index and the first visible item index after the animation.
+   */
   slideLeft() {
+    this.animateSlide('left');
+    setTimeout(()=> {
+      this.removeSlideAnimationClass();
+      this.setFirstItemInRowAfterSlide('left');
+      this.slided = true;
+      this.sliderIndex == 0 ? this.sliderIndex = this.totalPages - 1 : this.sliderIndex--;
+      setTimeout(() => this.slider.nativeElement.classList.remove('no-transition'), 50);
+    }, 1000);
+  }
 
-    let stepsToSlide = -this.itemsInRow; // 0 3 6 7 -> -3 3 1
-    let nextFirstPos = this.firstItemInRow - this.itemsInRow; // -2
-    if (nextFirstPos < 0 && (this.sliderIndex > 0)) { // -2 -1 0
+  
+   /**
+   * Initiates the animation to slide the content to the right.
+   * Updates the slider index and the first visible item index after the animation.
+   */
+   slideRight() {   
+    this.animateSlide('right');
+    setTimeout(()=> {
+      this.removeSlideAnimationClass();
+      this.setFirstItemInRowAfterSlide('right');
+      this.slided = true;
+      this.sliderIndex == this.totalPages - 1 ? this.sliderIndex = 0 : this.sliderIndex++;
+      setTimeout(() => this.slider.nativeElement.classList.remove('no-transition'), 50);
+    }, 1000);
+  }
+
+
+  /**
+   * Animates the slider in the specified direction.
+   * 
+   * @param {'left' | 'right'} direction - The direction of the animation.
+   */
+  animateSlide(direction : 'left' | 'right') {
+    let stepsToSlide = direction == 'left' ? this.stepsToSlideToLeft() : this.stepsToSlideToRight();
+    this.translateXValue = this.slided 
+      ? -((100 + (1/ this.itemsInRow) * 100) + (100 * stepsToSlide / this.itemsInRow)) 
+      : -(100 * stepsToSlide / this.itemsInRow);
+    this.slider.nativeElement.classList.add('animate-slide');
+  }
+
+
+  /**
+   * Calculates the necessary steps to slide to the left.
+   * 
+   * @returns {number} The number of steps to slide left.
+   */
+  stepsToSlideToLeft(): number {
+    let stepsToSlide = -this.itemsInRow; 
+    let nextFirstPos = this.firstItemInRow - this.itemsInRow; 
+    if (nextFirstPos < 0 && (this.sliderIndex > 0)) { 
       for (let i = 0; nextFirstPos + i < 0; i++) { -1
-        stepsToSlide++; // 2 // 1
+        stepsToSlide++; 
+      }
+    }
+    return stepsToSlide;
+  }
+
+
+  /**
+   * Calculates the necessary steps to slide to the right.
+   * 
+   * @returns {number} The number of steps to slide right.
+   */
+  stepsToSlideToRight(): number {
+    let stepsToSlide = this.itemsInRow; 
+    let nextFirstPos = this.firstItemInRow + this.itemsInRow; 
+    let nextEndPos = nextFirstPos + this.itemsInRow - 1;
+
+    if (nextEndPos >= this.videos.length && !(this.sliderIndex == this.totalPages - 1)) { 
+      for (let i = 0; nextEndPos - i >= this.videos.length; i++) {
+        stepsToSlide--; 
       }
     }
 
-    this.translateXValue = -((100 + (1/ this.itemsInRow) * 100) + (100 * stepsToSlide / this.itemsInRow));
-    this.slider.nativeElement.classList.add('animate-slide');
+    if (nextFirstPos >= this.videos.length && this.sliderIndex == this.totalPages - 1) {
+      for (let i = 0; nextFirstPos - i > this.videos.length; i++) {
+        stepsToSlide--; 
+      }
+    }
 
-    setTimeout(()=> {
-      this.slider.nativeElement.classList.remove('animate-slide');
-      this.slider.nativeElement.classList.add('no-transition');
+    return stepsToSlide; 
+  }
 
+
+  /**
+   * Removes the slide animation class and adds the 'no-transition' class.
+   */
+  removeSlideAnimationClass() {
+    this.slider.nativeElement.classList.remove('animate-slide');
+    this.slider.nativeElement.classList.add('no-transition');  
+  }
+
+
+  /**
+   * Sets the new index of the first visible item after a slide animation.
+   * 
+   * @param {'left' | 'right'} direction - The direction in which the slide occurred.
+   */
+  setFirstItemInRowAfterSlide(direction : 'left' | 'right') {
+    if (direction == 'left') {
       if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex == 0) {
         this.firstItemInRow = this.videos.length - this.itemsInRow;
       } else if (this.firstItemInRow - this.itemsInRow < 0 && this.sliderIndex > 0) {
@@ -83,38 +200,9 @@ export class CategoryRowComponent {
       } else {
         this.firstItemInRow -= this.itemsInRow;
       }
-  
-      this.slided = true;
-      this.sliderIndex == 0 ? this.sliderIndex = this.totalPages - 1 : this.sliderIndex--;
-
-      setTimeout(() => {
-        this.slider.nativeElement.classList.remove('no-transition'); 
-      }, 50);
-    }, 1000)
-    
-
-  }
-
-  slideRight() {
-
-    let stepsToSlide = this.itemsInRow; // 0 3 6 7 -> 3 3 1
-    let nextFirstPos = this.firstItemInRow + this.itemsInRow; // 9
-    let nextEndPos = nextFirstPos + this.itemsInRow - 1; // 11
-    if (nextEndPos >= this.videos.length && !(this.sliderIndex == this.totalPages - 1)) { // 9 10 11
-      for (let i = 0; nextEndPos - i >= this.videos.length; i++) {
-        stepsToSlide--; // 2 // 1
-      }
     }
-
-    this.translateXValue = this.slided ? -((100 + (1/ this.itemsInRow) * 100) + (100 * stepsToSlide / this.itemsInRow)) : -100;
-    this.slider.nativeElement.classList.add('animate-slide');
-     
-
-
-    setTimeout(()=> {
-      this.slider.nativeElement.classList.remove('animate-slide');
-      this.slider.nativeElement.classList.add('no-transition');
-
+    
+    if (direction == 'right') {
       if (this.sliderIndex == this.totalPages - 2) {
         this.firstItemInRow = this.videos.length - this.itemsInRow;
       } else if (this.sliderIndex == this.totalPages - 1) {
@@ -122,21 +210,16 @@ export class CategoryRowComponent {
       } else {
         this.firstItemInRow += this.itemsInRow;
       }
-  
-      this.slided = true;
-      this.sliderIndex == this.totalPages - 1 ? this.sliderIndex = 0 : this.sliderIndex++;
-      setTimeout(() => {
-        this.slider.nativeElement.classList.remove('no-transition'); 
-      }, 50);
-    }, 1000)
-
-    
-
-
+    }
   }
 
 
-  itemsbefore() { 
+  /**
+   * Creates an array with the indices of items that appear before the current row.
+   * 
+   * @returns {number[]} An array of previous item indices.
+   */
+  itemsbefore(): number[] { 
     let itemsbefore = [];
     for (let i = -(this.itemsInRow + 1); i < 0; i++) { 
       let item;
@@ -148,20 +231,27 @@ export class CategoryRowComponent {
   } 
 
 
-  itemsShown() {
+  /**
+   * Creates an array with the indices of items currently displayed in the row.
+   * 
+   * @returns {number[]} An array of displayed item indices.
+   */
+  itemsShown(): number[] {
     let items = [];
     for (let i = this.firstItemInRow; i < this.firstItemInRow + this.itemsInRow; i++) {
-      let item;
-      // if (i >= this.videos.length) item = i % this.videos.length;
-      // else item = i;
-      item = i % this.videos.length;
+      const item = i % this.videos.length;
       items.push(item);
     }
     return items;
   }
   
 
-  itemsafter() {
+  /**
+   * Creates an array with the indices of items that appear after the current row.
+   * 
+   * @returns {number[]} An array of subsequent item indices.
+   */
+  itemsafter(): number[] {
     const endPos = this.firstItemInRow + (this.itemsInRow - 1) 
     let itemsafter = [];
     for (let i = 1; i <= (this.itemsInRow + 1) ; i++) { 
