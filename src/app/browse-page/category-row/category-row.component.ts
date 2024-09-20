@@ -219,7 +219,7 @@ export class CategoryRowComponent {
    * 
    * @returns {number[]} An array of previous item indices.
    */
-  itemsbefore(): number[] { 
+  itemsBefore(): number[] { 
     let itemsbefore = [];
     for (let i = -(this.itemsInRow + 1); i < 0; i++) { 
       let item;
@@ -237,10 +237,14 @@ export class CategoryRowComponent {
    * @returns {number[]} An array of displayed item indices.
    */
   itemsShown(): number[] {
-    let items = [];
-    for (let i = this.firstItemInRow; i < this.firstItemInRow + this.itemsInRow; i++) {
-      const item = i % this.videos.length;
-      items.push(item);
+    const items : number[] = [];
+    const maxItems = Math.min(this.itemsInRow, this.videos.length);
+
+    for (let i = 0; i < maxItems; i++) {
+      const itemIndex = (this.firstItemInRow + i) % this.videos.length;
+      if (!items.includes(itemIndex)) {
+        items.push(itemIndex);
+      }
     }
     return items;
   }
@@ -251,7 +255,7 @@ export class CategoryRowComponent {
    * 
    * @returns {number[]} An array of subsequent item indices.
    */
-  itemsafter(): number[] {
+  itemsAfter(): number[] {
     const endPos = this.firstItemInRow + (this.itemsInRow - 1) 
     let itemsafter = [];
     for (let i = 1; i <= (this.itemsInRow + 1) ; i++) { 
