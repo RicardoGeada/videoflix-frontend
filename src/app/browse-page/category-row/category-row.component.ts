@@ -27,6 +27,8 @@ export class CategoryRowComponent {
   firstItemInRow = 0;
   translateXValue = 0;
 
+  private scrollTimeOut : boolean = false;
+
 
   /**
    * @constructor
@@ -93,14 +95,16 @@ export class CategoryRowComponent {
    * Updates the slider index and the first visible item index after the animation.
    */
   slideLeft() {
-    this.animateSlide('left');
-    setTimeout(()=> {
-      this.removeSlideAnimationClass();
-      this.setFirstItemInRowAfterSlide('left');
-      this.slided = true;
-      this.sliderIndex == 0 ? this.sliderIndex = this.totalPages - 1 : this.sliderIndex--;
-      setTimeout(() => this.slider.nativeElement.classList.remove('no-transition'), 50);
-    }, 1000);
+    if (this.totalPages > 1  && this.slided) {
+      this.animateSlide('left');
+      setTimeout(()=> {
+        this.removeSlideAnimationClass();
+        this.setFirstItemInRowAfterSlide('left');
+        this.slided = true;
+        this.sliderIndex == 0 ? this.sliderIndex = this.totalPages - 1 : this.sliderIndex--;
+        setTimeout(() => this.slider.nativeElement.classList.remove('no-transition'), 50);
+      }, 1000);
+    }
   }
 
   
@@ -108,15 +112,17 @@ export class CategoryRowComponent {
    * Initiates the animation to slide the content to the right.
    * Updates the slider index and the first visible item index after the animation.
    */
-   slideRight() {   
-    this.animateSlide('right');
-    setTimeout(()=> {
-      this.removeSlideAnimationClass();
-      this.setFirstItemInRowAfterSlide('right');
-      this.slided = true;
-      this.sliderIndex == this.totalPages - 1 ? this.sliderIndex = 0 : this.sliderIndex++;
-      setTimeout(() => this.slider.nativeElement.classList.remove('no-transition'), 50);
-    }, 1000);
+   slideRight() { 
+    if (this.totalPages > 1) {
+      this.animateSlide('right');
+      setTimeout(()=> {
+        this.removeSlideAnimationClass();
+        this.setFirstItemInRowAfterSlide('right');
+        this.slided = true;
+        this.sliderIndex == this.totalPages - 1 ? this.sliderIndex = 0 : this.sliderIndex++;
+        setTimeout(() => this.slider.nativeElement.classList.remove('no-transition'), 50);
+      }, 1000);
+    }  
   }
 
 
@@ -266,5 +272,41 @@ export class CategoryRowComponent {
     }
     return itemsafter;
   } 
+
+
+   /**
+   * HostListener for the wheel event to trigger horizontal sliding.
+   * Slides left or right depending on the horizontal scroll direction.
+   * 
+   * @param {WheelEvent} event - The wheel event.
+   */
+  @HostListener('wheel', ['$event'])
+  onWheelEvent(event: WheelEvent) {
+
+    if (this.scrollTimeOut) {
+      return;  // Prevent further actions if debouncing is active
+    } else {
+
+      // Block left scrolling unless a previous slide has been done
+      if (event.deltaX < 0 && !this.slided) {
+        return;
+      } else { 
+        this.scrollTimeOut = true;
+      }
+
+      // Trigger appropriate slideing based on scroll direction.
+      if (event.deltaX > 0) {
+        this.slideRight();
+      } else if (event.deltaX < 0) {
+        this.slideLeft();
+      }
+  
+      // Reset debounce lock
+      setTimeout(() => {
+        this.scrollTimeOut = false;
+      }, 1500);
+    }
+
+  }
 
 }
