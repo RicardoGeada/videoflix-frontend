@@ -8,3 +8,16 @@
     // background
     background-color: #141414;
 }
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+
+@media (width < 769px) {
+    .categories-list {
+        gap: 32px;
+    }
+}
