@@ -1,23 +1,26 @@
-<div class="billboard-container" (mouseenter)="playVideo()" (mouseleave)="stopVideo()" (touchstart)="playVideo()" (touchend)="stopVideo()">
-  <div class="billboard-video-info-container">
-    <h1>The Secret Life of Turtles</h1>
-    <p>
-      Explore the mysterious world of turtles as they navigate oceans and
-      beaches, playing a vital role in marine ecosystems. Discover their ancient
-      origins, unique behaviors, and the efforts to protect them from
-      extinction.
-    </p>
-    <button class="btn-primary">
-      <!-- img -->
-      <span>Play</span>
-    </button>
+<div class="billboard-row">
+  <div class="billboard-container" (mouseenter)="playVideo()" (mouseleave)="stopVideo()" (touchstart)="playVideo()" (touchend)="stopVideo()">
+    <div class="billboard-video-info-container" #infoContainer>
+      <h1 class="billboard-title" #billboardTitle>The Secret Life of Turtles</h1>
+      <p>
+        Explore the mysterious world of turtles as they navigate oceans and
+        beaches, playing a vital role in marine ecosystems. Discover their ancient
+        origins, unique behaviors, and the efforts to protect them from
+        extinction.
+      </p>
+      <button class="btn-primary">
+        <!-- img -->
+        <span>Play</span>
+      </button>
+    </div>
+  
+    <video class="billboard-video" #billboardVideo muted>
+      <source
+        src="assets/videos/the_secret_life_of_turtles.mp4"
+        type="video/mp4"
+      />
+      Your browser does not support the video tag.
+    </video>
   </div>
-
-  <video class="billboard-video" #billboardVideo muted>
-    <source
-      src="assets/videos/the_secret_life_of_turtles.mp4"
-      type="video/mp4"
-    />
-    Your browser does not support the video tag.
-  </video>
 </div>
+

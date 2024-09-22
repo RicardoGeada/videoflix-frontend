@@ -20,6 +20,8 @@ export class CategoryRowComponent {
 
   @ViewChild('slider') slider!: ElementRef<HTMLDivElement>;
 
+  @ViewChild('categoryContainer') categoryContainer!: ElementRef;
+
   sliderIndex = 0;
   itemsInRow = 1;
   totalPages = 1;
@@ -29,6 +31,8 @@ export class CategoryRowComponent {
 
   private scrollTimeOut : boolean = false;
   private defaultTouch = { x: 0, time: 0 };
+
+  categoryRowHeight: number = 0;
 
 
   /**
@@ -43,9 +47,15 @@ export class CategoryRowComponent {
    * Performs initializations such as updating items per row and calculating total pages.
    */
   ngAfterViewInit() {
+    this.categoryRowHeight = this.categoryContainer.nativeElement.offsetHeight;
     this.updateItemsInRow();
     this.calculateTotalPages();
     this.cdr.detectChanges();
+  }
+
+
+  getHeight(): number {
+    return this.categoryRowHeight;
   }
 
 
@@ -57,6 +67,7 @@ export class CategoryRowComponent {
    */
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
+    this.categoryRowHeight = this.categoryContainer.nativeElement.offsetHeight;
     this.updateItemsInRow();
     this.calculateTotalPages();
     this.updateSliderIndex();

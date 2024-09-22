@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-billboard',
@@ -9,7 +9,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 })
 export class BillboardComponent {
   @ViewChild('billboardVideo') billboardVideo!: ElementRef<HTMLVideoElement>;
-  
+
   playVideo() {
     const video = this.billboardVideo.nativeElement;
     video.play();
