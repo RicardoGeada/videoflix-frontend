@@ -1,0 +1,25 @@
+
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+
+    // background
+    background-color: #141414;
+}
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    position: relative;
+    z-index: 1;
+}
+
+
+@media (width < 769px) {
+    .categories-list {
+        gap: 32px;
+    }
+}

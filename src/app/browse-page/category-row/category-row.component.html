@@ -1,0 +1,48 @@
+<div class="category-container" #categoryContainer>
+  <h2 class="category-title">Category</h2>
+  <div class="slider-container">
+    <!-- slider control -->
+    @if (slided) {
+    <div class="slider-control-left" (click)="slideLeft()"><</div>
+    } 
+    @if (itemsInRow < videos.length) {
+    <div class="slider-control-right" (click)="slideRight()">></div>
+    }
+
+    <div
+      class="slider"
+      #slider
+      [style]="{
+        transform: slided
+          ? 'translateX(-' + (100 + (1 / itemsInRow) * 100) + '%)'
+          : '',
+        '--translateX': translateXValue + '%'
+      }"
+    >
+      @if(slided) {
+      <!-- render row before + 1 -->
+      @for (item of itemsBefore(); track item) { @for (video of videos; track
+      video; let index = $index) { @if(item == index) {
+      <div class="slider-item">
+        <img class="cover-img" src="" alt="{{ video }}" />
+      </div>
+      } } } }
+
+      <!-- render row -->
+      @for (item of itemsShown(); track item) { @for (video of videos; track
+      video; let index = $index) { @if(item == index) {
+      <div class="slider-item">
+        <img class="cover-img" src="" alt="{{ video }}" />
+      </div>
+      } } }
+      <!-- render row after + 1  -->
+      @if(itemsInRow < videos.length) { @for (item of itemsAfter(); track item)
+      { @for (video of videos; track video; let index = $index) { @if(item ==
+      index) {
+      <div class="slider-item">
+        <img class="cover-img" src="" alt="{{ video }}" />
+      </div>
+      } } } }
+    </div>
+  </div>
+</div>
