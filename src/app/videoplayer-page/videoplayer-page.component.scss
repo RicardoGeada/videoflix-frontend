@@ -1,0 +1,50 @@
+.videoplayer-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+}
+
+.videoplayer-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 32px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0)
+      );
+
+    .videoplayer-header-info {
+        font-size: 12px;
+        line-height: 15.62px;
+    }
+    
+    .videoflix-logo {
+        width: 48px;
+        height: 48px;
+    }
+   
+}
+
+
+
+video {
+    width: 100vw;
+    height: 56.25vw;
+    aspect-ratio: 16 / 9;
+}
+
+
+.videoplayer-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
