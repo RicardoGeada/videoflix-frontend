@@ -11,14 +11,26 @@
     </div>
 
     <!-- Video -->
-    <video #video src="/assets/videos/the_secret_life_of_turtles.mp4"></video>
+    <video #video src="/assets/videos/the_secret_life_of_turtles.mp4" [currentTime]="currentTime"></video>
     <!-- Control Panel -->
 
     <div class="videoplayer-controls">
-        <div class="progress-bar">
-            <input type="range" name="time-progress-bar" id="time-progress-bar" min="0" [max]="duration" step="0.1" [(ngModel)]="currentTime" (input)="setTime($event)">
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" #progressbar>
+                <div class="buffered" [style]="{'width': bufferedPercent + '%'}"></div>
+                <div class="played" [style]="{'width': playedPercent + '%'}"></div>
+                <button 
+                    class="thumb" 
+                    [style]="{'left': playedPercent + '%'}"
+                    (mousedown)="onMouseDownThumb($event)"
+                ></button>
+
+                <!-- <input type="range" name="time-progress-bar" id="time-progress-bar" min="0" [max]="duration" step="0.1" [(ngModel)]="currentTime" (input)="setTime($event)"> -->
+            </div>
             <span>{{ getTimeRemaining() }}</span>
         </div>
+
     </div>
  </div>
 
