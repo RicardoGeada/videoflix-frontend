@@ -1,4 +1,4 @@
- <div class="videoplayer-container">
+<!-- <div class="videoplayer-container"> -->
 
     <div class="videoplayer-header">
         <button>
@@ -10,9 +10,9 @@
         <img class="videoflix-logo" src="/assets/img/general/videoflix-logo.svg" alt="videoflix-logo">
     </div>
 
-    <!-- Video -->
+    <!-- Video
     <video #video src="/assets/videos/the_secret_life_of_turtles.mp4" [currentTime]="currentTime"></video>
-    <!-- Control Panel -->
+    Control Panel
 
     <div class="videoplayer-controls">
 
@@ -26,11 +26,27 @@
                     (mousedown)="onMouseDownThumb($event)"
                 ></button>
 
-                <!-- <input type="range" name="time-progress-bar" id="time-progress-bar" min="0" [max]="duration" step="0.1" [(ngModel)]="currentTime" (input)="setTime($event)"> -->
+                <input type="range" name="time-progress-bar" id="time-progress-bar" min="0" [max]="duration" step="0.1" [(ngModel)]="currentTime" (input)="setTime($event)">
             </div>
             <span>{{ getTimeRemaining() }}</span>
         </div>
 
-    </div>
- </div>
+    </div> -->
+ <!-- </div> -->
 
+<app-vjs-player
+  [options]="{autoplay: false, controls: true, sources: [{ src: '/assets/videos/the_secret_life_of_turtles.mp4', type: 'video/mp4' }], fluid: true, aspectRatio: '16:9', tracks: [{src: '/assets/captions/turtles_en.vtt', kind:'captions', srclang: 'en', label: 'English'}], controlBar: {
+
+
+        subsCapsButton : true,
+        playbackRateMenuButton: true,
+        durationDisplay: true,
+        progressControl: true,
+        remainingTimeDisplay: true,
+        currentTimeDisplay: true,
+        timeDivider: true,
+
+        pictureInPictureToggle: false,
+}, playbackRates: [0.5, 1, 1.5, 2]}"
+>
+</app-vjs-player>
