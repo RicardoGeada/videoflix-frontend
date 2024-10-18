@@ -48,6 +48,8 @@ export class VjsPlayerComponent {
     }[];
     tracks: { src: string; kind: string; srclang: string; label: string }[];
     playbackRates: number[];
+
+    title: string;
   };
 
   player!: Player;
@@ -146,7 +148,7 @@ export class VjsPlayerComponent {
     videojs.registerComponent('VideoTitle', VideoTitle);
 
     this.player.ready(() => {
-      const videoTitle = 'Mein Videotitel';
+      const videoTitle = this.options.title || 'Untitled Video';
       this.player.getChild('controlBar')!.addChild('VideoTitle',{ title: videoTitle}, 6);
     });
   }
