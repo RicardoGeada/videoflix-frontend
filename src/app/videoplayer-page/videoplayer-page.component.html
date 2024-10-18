@@ -35,18 +35,43 @@
  <!-- </div> -->
 
 <app-vjs-player
-  [options]="{autoplay: false, controls: true, sources: [{ src: '/assets/videos/the_secret_life_of_turtles.mp4', type: 'video/mp4' }], fluid: true, aspectRatio: '16:9', tracks: [{src: '/assets/captions/turtles_en.vtt', kind:'captions', srclang: 'en', label: 'English'}], controlBar: {
-
-
-        subsCapsButton : true,
-        playbackRateMenuButton: true,
-        durationDisplay: true,
-        progressControl: true,
-        remainingTimeDisplay: true,
-        currentTimeDisplay: true,
-        timeDivider: true,
-
-        pictureInPictureToggle: false,
-}, playbackRates: [0.5, 1, 1.5, 2]}"
+    [options]="{
+        autoplay: false,
+        controls: true,
+        sources: [
+            { 
+                src: '/assets/videos/the_secret_life_of_turtles.mp4', 
+                type: 'video/mp4' 
+            }
+        ], 
+        fluid: true, 
+        aspectRatio: '16:9', 
+        tracks: [
+            {
+                src: '/assets/captions/turtles_en.vtt',
+                kind:'captions', 
+                srclang: 'en', 
+                label: 'English - CC'
+            },
+            {
+                src: '/assets/subtitles/turtles_en.vtt',
+                kind:'subtitles', 
+                srclang: 'en', 
+                label: 'English - Sub'
+            },
+        ], 
+        controlBar: {
+            subsCapsButton : true,
+            playbackRateMenuButton: true,
+            durationDisplay: true,
+            progressControl: true,
+            remainingTimeDisplay: true,
+            currentTimeDisplay: true,
+            timeDivider: true,
+            fullscreenToggle: true,
+            pictureInPictureToggle: false,
+        }, 
+        playbackRates: [0.5, 1, 1.5, 2],
+    }"
 >
 </app-vjs-player>

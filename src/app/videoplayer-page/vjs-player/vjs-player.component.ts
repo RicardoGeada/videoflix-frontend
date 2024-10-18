@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -37,6 +38,8 @@ export class VjsPlayerComponent {
       currentTimeDisplay: boolean;
       timeDivider: boolean;
 
+      fullscreenToggle: boolean;
+
       pictureInPictureToggle: boolean;
     };
     sources: {
@@ -50,6 +53,7 @@ export class VjsPlayerComponent {
   player!: Player;
 
   constructor(private elementRef: ElementRef) {}
+
 
   // Instantiate a Video.js player OnInit
   ngOnInit() {
@@ -76,6 +80,7 @@ export class VjsPlayerComponent {
     this.addRewindButton();
     this.addForwardButton();
   }
+
 
   addRewindButton() {
     const Button = videojs.getComponent('Button');
