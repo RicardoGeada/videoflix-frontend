@@ -31,6 +31,22 @@
         width: 48px;
         height: 48px;
     }
+
+    .logo-and-title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+
+        .videoflix-logo {
+            width: 32px;
+        }
+
+        .videoplayer-header-video-title {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 26.04px;    
+        }
+    }
    
 }
 
