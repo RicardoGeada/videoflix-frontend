@@ -51,7 +51,7 @@ export class LoginPageComponent {
       }
      
       console.log(response);
-      this.router.navigate(['/browse'])
+      this.router.navigate(['/browse']);
     } catch (error) {
       console.error(error);
     }

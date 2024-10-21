@@ -38,5 +38,15 @@ export class BackendApiService {
     return lastValueFrom(this.http.post(url, body))
   }
 
+  resetPassword(newpassword: string, uid: string, token: string) {
+    const url = environment.baseURL + '/api/password-reset-confirm/'
+    const body = {
+      "uidb64": uid,
+      "token": token,
+      "new_password" : newpassword,
+    };
+    return lastValueFrom(this.http.post(url, body))
+  }
+
 
 }
