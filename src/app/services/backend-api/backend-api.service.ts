@@ -20,5 +20,14 @@ export class BackendApiService {
   }
 
 
+  login(email: string, password: string) {
+    const url = environment.baseURL + '/api/login/'
+    const body = {
+      "email" : email,
+      "password" : password,
+    };
+    return lastValueFrom(this.http.post(url, body))
+  }
+
 
 }

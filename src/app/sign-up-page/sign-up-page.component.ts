@@ -51,6 +51,17 @@ export class SignUpPageComponent {
     }
   }
 
+
+  async handleRegistration(email: string, password: string) {
+    try {
+      const response = await this.bs.register(email, password);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
@@ -60,14 +71,5 @@ export class SignUpPageComponent {
         this.validateAllFormFields(control);
       }
     });
-  }
-
-  async handleRegistration(email: string, password: string) {
-    try {
-      const response = await this.bs.register(email, password);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
   }
 }

@@ -5,22 +5,31 @@
 
         <h1>Log in</h1>
 
-        <form action="" method="post">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- email field -->
           <div class="email-field-container">
-            <input type="email" name="email" id="email" placeholder="Email Address" required />
+            <app-form-input
+              [form]="form"
+              controlName="email"
+              type="email"
+              placeholder="Email Address"
+            ></app-form-input> 
           </div>
+          
           <!-- password field -->
           <div class="password-field-container">
-            <input type="password" name="password" id="password" placeholder="Password" required #password/>
-            <button type="button" (click)="togglePasswordVisibility(password)">
-              <img [src]="'/assets/img/general/' + passwordImageSource" alt="visibility" class="visibility-icon">
-            </button> 
+            <app-form-input
+              [form]="form"
+              controlName="password"
+              type="password"
+              placeholder="Enter a password"
+            ></app-form-input>
           </div>
+          
           <!-- remember-me field -->
           <div class="remember-me-field-container">
             <label class="custom-checkbox">
-              <input type="checkbox" name="rememberMe" id="rememberMe"/>
+              <input formControlName="rememberMe" type="checkbox" name="rememberMe" id="rememberMe"/>
               <span class="checkmark"></span>
               <span>Remember me</span>
             </label>
@@ -32,7 +41,7 @@
         </form>
 
         <div class="forgot-password-container">
-          <a href="/forgotpassword" class="link-primary">Forgot password?</a>
+          <a href="/forgot-password" class="link-primary">Forgot password?</a>
         </div>
         <div class="sign-up-container">
           <span>New to Videoflix?</span>
