@@ -29,5 +29,14 @@ export class BackendApiService {
     return lastValueFrom(this.http.post(url, body))
   }
 
+  
+  forgotPassword(email: string) {
+    const url = environment.baseURL + '/api/password-reset/'
+    const body = {
+      "email" : email,
+    };
+    return lastValueFrom(this.http.post(url, body))
+  }
+
 
 }
