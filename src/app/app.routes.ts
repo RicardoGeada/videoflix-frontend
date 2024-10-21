@@ -6,6 +6,7 @@ import { ResetPasswordPageComponent } from './reset-password-page/reset-password
 import { ForgotPasswordPageComponent } from './forgot-password-page/forgot-password-page.component';
 import { BrowsePageComponent } from './browse-page/browse-page.component';
 import { VideoplayerPageComponent } from './videoplayer-page/videoplayer-page.component';
+import { VerifyAccountPageComponent } from './verify-account-page/verify-account-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent},
@@ -15,4 +16,5 @@ export const routes: Routes = [
     { path: 'forgot-password', component: ForgotPasswordPageComponent},
     { path: 'browse', component: BrowsePageComponent},
     { path: 'play', component: VideoplayerPageComponent},
+    { path: 'verify-account', component: VerifyAccountPageComponent},
 ];

@@ -20,6 +20,16 @@ export class BackendApiService {
   }
 
 
+  verifyAccount(uid: string, token: string) {
+    const url = environment.baseURL + '/api/activate/'
+    const body = {
+      "uidb64": uid,
+      "token": token,
+    };
+    return lastValueFrom(this.http.post(url, body))
+  }
+
+
   login(email: string, password: string) {
     const url = environment.baseURL + '/api/login/'
     const body = {
