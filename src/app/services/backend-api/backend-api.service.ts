@@ -11,7 +11,7 @@ export class BackendApiService {
   constructor(private http: HttpClient) { }
 
   register(email: string, password: string) {
-    const url = environment.baseURL + '/api/register/'
+    const url = environment.baseURL + '/api/register/';
     const body = {
       "email" : email,
       "password" : password,
@@ -21,7 +21,7 @@ export class BackendApiService {
 
 
   verifyAccount(uid: string, token: string) {
-    const url = environment.baseURL + '/api/activate/'
+    const url = environment.baseURL + '/api/activate/';
     const body = {
       "uidb64": uid,
       "token": token,
@@ -31,7 +31,7 @@ export class BackendApiService {
 
 
   login(email: string, password: string) {
-    const url = environment.baseURL + '/api/login/'
+    const url = environment.baseURL + '/api/login/';
     const body = {
       "email" : email,
       "password" : password,
@@ -41,7 +41,7 @@ export class BackendApiService {
 
   
   forgotPassword(email: string) {
-    const url = environment.baseURL + '/api/password-reset/'
+    const url = environment.baseURL + '/api/password-reset/';
     const body = {
       "email" : email,
     };
@@ -50,7 +50,7 @@ export class BackendApiService {
 
   
   resetPassword(newpassword: string, uid: string, token: string) {
-    const url = environment.baseURL + '/api/password-reset-confirm/'
+    const url = environment.baseURL + '/api/password-reset-confirm/';
     const body = {
       "uidb64": uid,
       "token": token,
