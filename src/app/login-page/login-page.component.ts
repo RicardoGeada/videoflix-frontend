@@ -5,6 +5,7 @@ import { BackendApiService } from '../services/backend-api/backend-api.service';
 import { FormInputComponent } from '../shared/components/form-input/form-input.component';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 export class LoginPageComponent {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private bs: BackendApiService, private router: Router) {
+  constructor(private fb: FormBuilder, private bs: BackendApiService, private router: Router, private as: AuthService) {
     this.form = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -42,14 +43,7 @@ export class LoginPageComponent {
   async handleLogin(email: string, password: string, rememberMe: boolean) {
     try {
       const response : any = await this.bs.login(email, password);
-      if (rememberMe) {
-        localStorage.setItem('access_token', response['access']);
-        localStorage.setItem('refresh_token', response['refresh']);
-      } else {
-        sessionStorage.setItem('access_token', response['access'])
-        sessionStorage.setItem('refresh_token', response['refresh'])
-      }
-     
+      this.as.saveTokens(response['access'], response['refresh'], rememberMe);  
       console.log(response);
       this.router.navigate(['/browse']);
     } catch (error) {
