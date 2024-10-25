@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { BillboardComponent } from './billboard/billboard.component';
 import { CategoryRowComponent } from './category-row/category-row.component';
+import { ContentService } from '../services/content/content.service';
+
 
 @Component({
   selector: 'app-browse-page',
@@ -12,21 +14,19 @@ import { CategoryRowComponent } from './category-row/category-row.component';
   styleUrl: './browse-page.component.scss'
 })
 export class BrowsePageComponent {
-
-  @ViewChild('billboardRow') billboardRow!: CategoryRowComponent;
   
-  billboardRowHeight: number = 0;
+  genres: {id: number, name: string}[] = [];
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private contentService: ContentService) {}
 
-  ngAfterViewInit () {
-    this.billboardRowHeight = this.billboardRow.getHeight();
-    this.cdr.detectChanges();
+  ngOnInit() {
+    this.loadGenres();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.billboardRowHeight = this.billboardRow.getHeight();
+  async loadGenres() {
+    const response : any = await this.contentService.getGenres();
+    this.genres = response;
+    console.log(response);
   }
 
 }

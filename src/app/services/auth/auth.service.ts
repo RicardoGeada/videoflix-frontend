@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,  private router: Router) { }
 
   saveTokens(accessToken: string, refreshToken: string, rememberMe: boolean): void {
     if (rememberMe) {
@@ -59,5 +60,7 @@ export class AuthService {
 
     sessionStorage.removeItem('access_token');
     sessionStorage.removeItem('refresh_token');
+
+    this.router.navigate(['/login']);
   }
 }

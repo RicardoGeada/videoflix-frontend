@@ -1,34 +1,40 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import { filter, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthInterceptorService implements HttpInterceptor{
+export class AuthInterceptorService implements HttpInterceptor {
+  
+  private isRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService) { }
+
+
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       const ACCESS_TOKEN = this.authService.getAccessToken(); 
 
-  
       if (ACCESS_TOKEN) {
         req = this.addTokenHeader(req, ACCESS_TOKEN);
       }
 
       return next.handle(req).pipe(
-        catchError((error:HttpErrorResponse) => {
-          if (error.status === 401 && this.authService.getResfreshToken()) {
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401 && !req.url.includes('api/token/refresh')) {
             return this.tryRefreshingAccessToken(req, next);
           } else {
+            this.authService.logout();
             return throwError(() => new Error(error.message));
           }
         })
-      )
+      );
   }
+
 
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {
@@ -38,17 +44,35 @@ export class AuthInterceptorService implements HttpInterceptor{
   }
 
 
-  tryRefreshingAccessToken(request: HttpRequest<any>, next: HttpHandler) {
-    return this.authService.refreshAccessToken().pipe(
-      switchMap((newTokens: any) => {
-        this.authService.saveAccessToken(newTokens.access)
-        return next.handle(this.addTokenHeader(request, newTokens.access))
-      }),
-      catchError((error) => {
-        this.authService.logout();
-        this.router.navigate(['/login']);
-        return throwError(() => new Error(error.message));
-      })
-    )
+
+  private tryRefreshingAccessToken(request: HttpRequest<any>, next: HttpHandler) {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
+  
+      return this.authService.refreshAccessToken().pipe(
+        switchMap((token: any) => {
+          this.isRefreshing = false;
+          this.refreshTokenSubject.next(token['access']);
+          this.authService.saveAccessToken(token['access']);
+          return next.handle(this.addTokenHeader(request, token['access']));
+        }),
+        catchError((error) => {
+          this.isRefreshing = false;
+          if (error.status === 401 || error.status === 403) {
+            this.authService.logout(); 
+          }
+          return throwError(() => error);
+        })
+      );
+    } else {
+      // wait for refreshed access token
+      return this.refreshTokenSubject.pipe(
+        filter(token => token != null),
+        take(1),
+        switchMap(token => next.handle(this.addTokenHeader(request, token!)))
+      );
+    }
   }
+
 }

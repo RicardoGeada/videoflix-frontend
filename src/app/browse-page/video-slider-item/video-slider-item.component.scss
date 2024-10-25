@@ -1,0 +1,18 @@
+:host {
+  flex: 0 0 calc(100% / var(--itemsInRow));
+  aspect-ratio: 16 / 9;
+  padding: 0 0.2vw;
+
+  // delete
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .cover-img {
+    width: 100%;
+    background-color: rgba(127, 255, 212, 0.592);
+    height: 100%;
+    border-radius: 0.2vw;
+  }
+  
+}
