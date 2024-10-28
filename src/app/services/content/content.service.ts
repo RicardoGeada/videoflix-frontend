@@ -25,8 +25,9 @@ export class ContentService {
     return lastValueFrom(this.http.get(url, { params }));
   }
 
-  getThumbnail(url: string) {
-    return lastValueFrom(this.http.get(url, { responseType: 'blob'}));
+  getVideo(id: string) {
+    const url = environment.baseURL + '/api/videos/' + id + '/';
+    return lastValueFrom(this.http.get(url));
   }
 
 }

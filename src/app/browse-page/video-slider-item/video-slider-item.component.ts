@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,8 +13,11 @@ export class VideoSliderItemComponent {
 
   @Input() video : any;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
+  openDetailView(id: number) {
+    this.router.navigate(['/browse'], { queryParams: { vid: id } });
+  }
 
 
 }

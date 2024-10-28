@@ -4,12 +4,13 @@ import { FooterComponent } from '../shared/components/footer/footer.component';
 import { BillboardComponent } from './billboard/billboard.component';
 import { CategoryRowComponent } from './category-row/category-row.component';
 import { ContentService } from '../services/content/content.service';
+import { VideoDetailComponent } from './video-detail/video-detail.component';
 
 
 @Component({
   selector: 'app-browse-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, BillboardComponent, CategoryRowComponent],
+  imports: [HeaderComponent, FooterComponent, BillboardComponent, CategoryRowComponent, VideoDetailComponent],
   templateUrl: './browse-page.component.html',
   styleUrl: './browse-page.component.scss'
 })

@@ -1,0 +1,46 @@
+
+@if(videoId && video) { 
+  @if (!isMobile) {
+  <!-- desktop view -->
+  <div class="overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <button class="btn-close" (click)="closeModal()">
+        <img src="/assets/img/general/close.svg" alt="x" />
+      </button>
+    
+      <div class="video-detail">
+        <div class="img-container">
+          <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" />
+        </div>
+        <div class="info-container">
+          <h1>{{ video.title }}</h1>
+          <p>{{ video.description }}</p>
+          <button class="btn-primary btn-play" (click)="playVideo(video.id)">
+            <img src="/assets/img/videoplayer/play_arrow.svg" alt="play_arrow">
+            <span>Play</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  } 
+  @if (isMobile) {
+    <!-- mobile view -->
+    <div class="full-page">
+      <div class="video-detail">
+        <app-header></app-header>
+        <div class="img-container">
+          <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" />
+        </div>
+        <div class="info-container">
+          <h1>{{ video.title }}</h1>
+          <p>{{ video.description }}</p>
+          <button class="btn-primary btn-play" (click)="playVideo(video.id)">
+            <img src="/assets/img/videoplayer/play_arrow.svg" alt="play_arrow">
+            <span>Play</span>
+          </button>
+        </div>
+      </div>
+    </div>
+} 
+}

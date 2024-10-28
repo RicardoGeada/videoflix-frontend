@@ -15,6 +15,6 @@ export const routes: Routes = [
     { path: 'reset-password', component: ResetPasswordPageComponent},
     { path: 'forgot-password', component: ForgotPasswordPageComponent},
     { path: 'browse', component: BrowsePageComponent},
-    { path: 'play', component: VideoplayerPageComponent},
+    { path: 'watch/:id', component: VideoplayerPageComponent},
     { path: 'verify-account', component: VerifyAccountPageComponent},
 ];
