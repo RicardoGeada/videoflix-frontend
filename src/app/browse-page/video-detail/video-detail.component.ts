@@ -43,7 +43,6 @@ export class VideoDetailComponent {
       } catch (error) {
         console.error(error);
       }
-     
     }
   }
 

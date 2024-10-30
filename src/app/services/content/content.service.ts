@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,6 @@ export class ContentService {
     const url = environment.baseURL + '/api/videos/' + id + '/';
     return lastValueFrom(this.http.get(url));
   }
+
 
 }
