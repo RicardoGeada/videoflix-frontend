@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { FormInputComponent } from '../shared/components/form-input/form-input.component';
 import { passwordsMatchValidator } from '../sign-up-page/validators/passwordsMatch.validator';
+import { BackendApiService } from '../services/backend-api/backend-api.service';
 
 @Component({
   selector: 'app-forgot-password-page',
@@ -23,7 +24,7 @@ export class ForgotPasswordPageComponent {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private bs: BackendApiService) {
     this.form = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -33,10 +34,21 @@ export class ForgotPasswordPageComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      // submit
+      const email = this.form.get('email')?.value;
+      this.handleForgotPassword(email)
     } else {
       this.validateAllFormFields(this.form);
     }
+  }
+
+
+  async handleForgotPassword(email: string) {
+    	try {
+        const response : any = await this.bs.forgotPassword(email);
+        console.log(response);
+      } catch (error) {
+        console.log(error)
+      }
   }
 
   validateAllFormFields(formGroup: FormGroup) {

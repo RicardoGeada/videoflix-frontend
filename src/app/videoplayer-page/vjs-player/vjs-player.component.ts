@@ -1,10 +1,9 @@
 import {
   Component,
   ElementRef,
-  HostListener,
+  EventEmitter,
   Input,
-  OnDestroy,
-  OnInit,
+  Output,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -23,39 +22,33 @@ export class VjsPlayerComponent {
   @ViewChild('target', { static: true }) target!: ElementRef;
 
   // See options: https://videojs.com/guides/options
-  @Input() options!: {
-    fluid: boolean;
-    aspectRatio: string;
-    autoplay: boolean;
-    controls: boolean;
+
+  @Input() video!: any;
+
+  defaultOptions = {
+    fluid: true,
+    aspectRatio: '16:9',
+    autoplay: false,
+    controls: true,
     controlBar: {
-      subsCapsButton: boolean;
-      playbackRateMenuButton: boolean;
-
-      durationDisplay: boolean;
-      progressControl: boolean;
-      remainingTimeDisplay: boolean;
-      currentTimeDisplay: boolean;
-      timeDivider: boolean;
-
-      fullscreenToggle: boolean;
-
-      pictureInPictureToggle: boolean;
-    };
-    sources: {
-      src: string;
-      type: string;
-    }[];
-    tracks: { src: string; kind: string; srclang: string; label: string }[];
-    playbackRates: number[];
-
-    title: string;
+      subsCapsButton: true,
+      playbackRateMenuButton: true,
+      durationDisplay: true,
+      progressControl: true,
+      remainingTimeDisplay: true,
+      currentTimeDisplay: true,
+      timeDivider: true,
+      fullscreenToggle: true,
+      pictureInPictureToggle: false,
+    },
+    playbackRates: [0.5, 1, 1.5, 2],
   };
 
   player!: Player;
 
-  constructor(private elementRef: ElementRef) {}
+  @Output() userActivityChange = new EventEmitter<boolean>();
 
+  constructor(private elementRef: ElementRef) {}
 
   // Instantiate a Video.js player OnInit
   ngOnInit() {
@@ -66,8 +59,16 @@ export class VjsPlayerComponent {
         console.log('onPlayerReady', this);
       }
     );
+
+    this.player.on('useractive', () => {
+      this.userActivityChange.emit(true);  // Aktiv
+    });
+    this.player.on('userinactive', () => {
+      this.userActivityChange.emit(false); // Inaktiv
+    });
+
     this.addCustomButtons();
-    this. addVideoTitle();
+    this.addVideoTitle();
   }
 
   // Dispose the player OnDestroy
@@ -77,12 +78,23 @@ export class VjsPlayerComponent {
     }
   }
 
+   get options() {
+    const sources = {
+      src: this.video.video_url,
+      type: 'application/vnd.apple.mpegurl',
+    };
+
+    return {
+      ...this.defaultOptions,
+      sources: sources,
+      tracks: [],
+    };
+  }
 
   addCustomButtons() {
     this.addRewindButton();
     this.addForwardButton();
   }
-
 
   addRewindButton() {
     const Button = videojs.getComponent('Button');
@@ -104,10 +116,11 @@ export class VjsPlayerComponent {
 
     // add button to control bar
     this.player.ready(() => {
-      this.player.getChild('controlBar')!.addChild('RewindButton', {controlText: '10 seconds back'}, 1);
+      this.player
+        .getChild('controlBar')!
+        .addChild('RewindButton', { controlText: '10 seconds back' }, 1);
     });
   }
-
 
   addForwardButton() {
     const Button = videojs.getComponent('Button');
@@ -129,13 +142,14 @@ export class VjsPlayerComponent {
 
     // add button to control bar
     this.player.ready(() => {
-      this.player.getChild('controlBar')!.addChild('ForwardButton', {controlText: '10 seconds forward'}, 2);
+      this.player
+        .getChild('controlBar')!
+        .addChild('ForwardButton', { controlText: '10 seconds forward' }, 2);
     });
   }
 
-
   addVideoTitle() {
-    const Component = videojs.getComponent('Component')
+    const Component = videojs.getComponent('Component');
 
     class VideoTitle extends Component {
       constructor(player: Player, options: any) {
@@ -148,8 +162,10 @@ export class VjsPlayerComponent {
     videojs.registerComponent('VideoTitle', VideoTitle);
 
     this.player.ready(() => {
-      const videoTitle = this.options.title || 'Untitled Video';
-      this.player.getChild('controlBar')!.addChild('VideoTitle',{ title: videoTitle}, 6);
+      const videoTitle = this.video.title || 'Untitled Video';
+      this.player
+        .getChild('controlBar')!
+        .addChild('VideoTitle', { title: videoTitle }, 6);
     });
   }
 }

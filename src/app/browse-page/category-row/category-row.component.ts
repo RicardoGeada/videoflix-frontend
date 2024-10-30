@@ -6,15 +6,20 @@ import {
   HostListener,
   ChangeDetectorRef
 } from '@angular/core';
+import { ContentService } from '../../services/content/content.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { VideoSliderItemComponent } from '../video-slider-item/video-slider-item.component';
 
 @Component({
   selector: 'app-category-row',
   standalone: true,
-  imports: [],
+  imports: [VideoSliderItemComponent],
   templateUrl: './category-row.component.html',
   styleUrl: './category-row.component.scss',
 })
 export class CategoryRowComponent {
+
+  @Input('genre') genre!: {id:number, name: string};
 
   @Input('categoryVideos') videos: any[] = [];
 
@@ -39,24 +44,40 @@ export class CategoryRowComponent {
    * @constructor
    * @param {ChangeDetectorRef} cdr - Service for manually triggering change detection.
    */
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private contentService: ContentService, private sanitizer: DomSanitizer) {}
 
 
   /**
    * Lifecycle hook called after the view has been initialized.
    * Performs initializations such as updating items per row and calculating total pages.
    */
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.categoryRowHeight = this.categoryContainer.nativeElement.offsetHeight;
     this.updateItemsInRow();
+    await this.loadVideos();
     this.calculateTotalPages();
     this.cdr.detectChanges();
+    
   }
 
 
   getHeight(): number {
     return this.categoryRowHeight;
   }
+
+
+  async loadVideos() {
+    const response: any = await this.contentService.getGenreVideos(this.genre.id, (6 * this.itemsInRow + 2), this.sliderIndex);
+    this.videos = response.results;
+    console.log(response);
+  }
+
+  // async loadThumbnail(url: string) {
+  //   const response : any = await this.contentService.getThumbnail(url);
+  //   const objectURL = URL.createObjectURL(response);
+  //   const thumbnailUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+  //   return thumbnailUrl;
+  // }
 
 
   /**

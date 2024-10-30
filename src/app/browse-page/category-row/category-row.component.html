@@ -1,5 +1,5 @@
 <div class="category-container" #categoryContainer>
-  <h2 class="category-title">Category</h2>
+  <h2 class="category-title">{{ genre.name }}</h2>
   <div class="slider-container">
     <!-- slider control -->
     @if (slided) {
@@ -22,26 +22,20 @@
       @if(slided) {
       <!-- render row before + 1 -->
       @for (item of itemsBefore(); track item) { @for (video of videos; track
-      video; let index = $index) { @if(item == index) {
-      <div class="slider-item">
-        <img class="cover-img" src="" alt="{{ video }}" />
-      </div>
+      video.id; let index = $index) { @if(item == index) {
+        <app-video-slider-item [video]="video"></app-video-slider-item>
       } } } }
 
       <!-- render row -->
       @for (item of itemsShown(); track item) { @for (video of videos; track
-      video; let index = $index) { @if(item == index) {
-      <div class="slider-item">
-        <img class="cover-img" src="" alt="{{ video }}" />
-      </div>
+      video.id; let index = $index) { @if(item == index) {
+        <app-video-slider-item [video]="video"></app-video-slider-item>
       } } }
       <!-- render row after + 1  -->
       @if(itemsInRow < videos.length) { @for (item of itemsAfter(); track item)
-      { @for (video of videos; track video; let index = $index) { @if(item ==
+      { @for (video of videos; track video.id; let index = $index) { @if(item ==
       index) {
-      <div class="slider-item">
-        <img class="cover-img" src="" alt="{{ video }}" />
-      </div>
+        <app-video-slider-item [video]="video"></app-video-slider-item>
       } } } }
     </div>
   </div>

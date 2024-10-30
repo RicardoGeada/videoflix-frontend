@@ -1,76 +1,40 @@
-<!-- <div class="videoplayer-container"> -->
+<div class="videoplayer-container">
 
-    <div class="videoplayer-header">
-        @if(!isMobile) {
-            <a href="/browse">
-                <img src="/assets/img/videoplayer/arrow_back.svg" alt="arrow-back">
-            </a>
-            <div class="videoplayer-header-info">
-                Optimizing video for your screen 40%
-            </div>
-            <a href="/browse">
-                <img class="videoflix-logo" src="/assets/img/general/videoflix-logo.svg" alt="videoflix-logo">
-            </a>
-        } 
-        @else {
-            <div class="logo-and-title">
-                <a href="/browse">
-                    <img class="videoflix-logo" src="/assets/img/general/videoflix-logo.svg" alt="videoflix-logo">
-                </a>
-                <div class="videoplayer-header-video-title">
-                    Video Title
-                </div>
-            </div>
-            <a href="/browse">
-                <img src="/assets/img/videoplayer/close.svg" alt="close">
-            </a>
-            
-        }
-        
-    </div>
+<div class="videoplayer-header" [class.hidden]="!isUserActive">
+  @if(!isMobile) {
+  <a href="/browse">
+    <img src="/assets/img/videoplayer/arrow_back.svg" alt="arrow-back" />
+  </a>
+  <div class="videoplayer-header-info">
+    Optimizing video for your screen 40%
+  </div>
+  <a href="/browse">
+    <img
+      class="videoflix-logo"
+      src="/assets/img/general/videoflix-logo.svg"
+      alt="videoflix-logo"
+    />
+  </a>
+  } @else {
+  <div class="logo-and-title">
+    <a href="/browse">
+      <img
+        class="videoflix-logo"
+        src="/assets/img/general/videoflix-logo.svg"
+        alt="videoflix-logo"
+      />
+    </a>
+    <div class="videoplayer-header-video-title">{{ video.title }}</div>
+  </div>
+  <a href="/browse">
+    <img src="/assets/img/general/close.svg" alt="close" />
+  </a>
 
- <!-- </div> -->
+  }
+</div>
 
-<app-vjs-player
-    [options]="{
-        autoplay: false,
-        controls: true,
-        sources: [
-            { 
-                src: '/assets/videos/the_secret_life_of_turtles.mp4', 
-                type: 'video/mp4' 
-            }
-        ], 
-        fluid: true, 
-        aspectRatio: '16:9', 
-        tracks: [
-            {
-                src: '/assets/captions/turtles_en.vtt',
-                kind:'captions', 
-                srclang: 'en', 
-                label: 'English - CC'
-            },
-            {
-                src: '/assets/subtitles/turtles_en.vtt',
-                kind:'subtitles', 
-                srclang: 'en', 
-                label: 'English - Sub'
-            },
-        ], 
-        controlBar: {
-            subsCapsButton : true,
-            playbackRateMenuButton: true,
-            durationDisplay: true,
-            progressControl: true,
-            remainingTimeDisplay: true,
-            currentTimeDisplay: true,
-            timeDivider: true,
-            fullscreenToggle: true,
-            pictureInPictureToggle: false,
-        }, 
-        playbackRates: [0.5, 1, 1.5, 2],
 
-        title: 'The secret life of turtles',
-    }"
->
-</app-vjs-player>
+@if (video) {
+<app-vjs-player [video]="video" (userActivityChange)="this.isUserActive = $event"> </app-vjs-player>
+}
+</div>
