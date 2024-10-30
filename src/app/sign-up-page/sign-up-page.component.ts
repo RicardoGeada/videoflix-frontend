@@ -11,6 +11,8 @@ import {
 import { FormInputComponent } from '../shared/components/form-input/form-input.component';
 import { passwordsMatchValidator } from './validators/passwordsMatch.validator';
 import { BackendApiService } from '../services/backend-api/backend-api.service';
+import { FormService } from '../services/form/form.service';
+
 
 @Component({
   selector: 'app-sign-up-page',
@@ -27,7 +29,7 @@ import { BackendApiService } from '../services/backend-api/backend-api.service';
 export class SignUpPageComponent {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private bs: BackendApiService) {
+  constructor(private fb: FormBuilder, private bs: BackendApiService, private formService: FormService) {
     this.form = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -40,6 +42,14 @@ export class SignUpPageComponent {
     );
   }
 
+
+  ngOnInit() {
+    const email = this.formService.getEmail();
+    this.form.patchValue({ email });
+  }
+
+
+
   onSubmit() {
     if (this.form.valid) {
       const email = this.form.get('email')?.value;
@@ -47,7 +57,7 @@ export class SignUpPageComponent {
       this.handleRegistration(email, password)
 
     } else {
-      this.validateAllFormFields(this.form);
+      this.formService.validateAllFormFields(this.form);
     }
   }
 
@@ -61,15 +71,4 @@ export class SignUpPageComponent {
     }
   }
 
-
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((field) => {
-      const control = formGroup.get(field);
-      if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateAllFormFields(control);
-      }
-    });
-  }
 }

@@ -37,7 +37,9 @@ button {
     font-size: 18px;
 
     &:hover, &:focus {
+        color: $color-text;
         background-color: $color-primary-hover;
+        text-decoration: none;
     }
 
     &:active {
