@@ -52,6 +52,34 @@ button {
 }
 
 
+.btn-secondary{ //blue
+    background-color: #FFFFFF;
+    color: $color-primary;
+    padding: 12px 24px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+
+    font-size: 18px;
+
+    &:hover, &:focus {
+        color: $color-text;
+        background-color: $color-primary-hover;
+        text-decoration: none;
+    }
+
+    &:active {
+        color: $color-primary;
+    }
+
+    &:disabled {
+        background-color: $color-primary-disabled;
+    }
+}
+
+
 // link
 a {
     text-decoration: none;

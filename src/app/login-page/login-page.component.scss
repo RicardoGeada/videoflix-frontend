@@ -72,17 +72,7 @@ input {
 }
 
 .password-field-container {
-  // position: relative;
   margin-bottom: 16px;
-  // input {
-  //   padding: 12px 56px 12px 24px;
-  // }
-
-  // .visibility-icon {
-  //   position: absolute;
-  //   right: 24px;
-  //   top: 12px;
-  // }
 }
 
 .remember-me-field-container {
@@ -157,6 +147,7 @@ input {
   justify-content: center;
   gap: 24px;
   margin-top: 16px;
+  flex-wrap: wrap;
 
   span {
     font-weight: 500;

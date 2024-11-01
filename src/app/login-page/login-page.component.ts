@@ -6,18 +6,22 @@ import { FormInputComponent } from '../shared/components/form-input/form-input.c
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
+import { FormService } from '../services/form/form.service';
+import { ErrorToastComponent } from '../shared/components/error-toast/error-toast.component';
+import { ErrorToastService } from '../services/error-toast/error-toast.service';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, FormInputComponent, ReactiveFormsModule],
+  imports: [HeaderComponent, FooterComponent, FormInputComponent, ReactiveFormsModule, ErrorToastComponent],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
+
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private bs: BackendApiService, private router: Router, private as: AuthService) {
+  constructor(private fb: FormBuilder, private bs: BackendApiService, private router: Router, private as: AuthService, private formService: FormService, public errorToastService: ErrorToastService) {
     this.form = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -35,7 +39,7 @@ export class LoginPageComponent {
       const rememberMe = this.form.get('rememberMe')?.value;
       this.handleLogin(email, password, rememberMe);
     } else {
-      this.validateAllFormFields(this.form);
+      this.formService.validateAllFormFields(this.form);
     }
   }
 
@@ -46,21 +50,10 @@ export class LoginPageComponent {
       this.as.saveTokens(response['access'], response['refresh'], rememberMe);  
       console.log(response);
       this.router.navigate(['/browse']);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      this.errorToastService.errorMessage = error.error.detail;
     }
-  }
-
-
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((field) => {
-      const control = formGroup.get(field);
-      if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateAllFormFields(control);
-      }
-    });
   }
 
 }

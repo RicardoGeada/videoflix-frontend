@@ -1,1 +1,5 @@
 <router-outlet></router-outlet>
+
+@if (errorToastService.errorMessage) {
+    <app-error-toast></app-error-toast>
+}
