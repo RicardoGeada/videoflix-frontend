@@ -18,6 +18,10 @@ export class FormService {
     return this.email;
   }
 
+  /**
+   * Marks all controls in a FormGroup as touched to trigger validation messages.
+   * @param formGroup 
+   */
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);

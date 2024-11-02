@@ -1,7 +1,7 @@
-@if(errorMessage) {
-    <div class="error-toast" [ngClass]="{'slide-in': isVisible}">
+@if(response) {
+    <div class="message-toast" [ngClass]="{'slide-in': isVisible, 'success' : response.type == 'success', 'error' : response.type == 'error'}">
         <img src="/assets/img/general/exclamation-circle-fill.svg" alt="exclamation-circle-fill">
-        <span class="error-message"> {{ errorMessage }} </span>
+        <span class="message"> {{ response.message }} </span>
         @if (button) {
             <button class="btn-cta btn-secondary" (click)="button.function()">
                 {{ button.name }}

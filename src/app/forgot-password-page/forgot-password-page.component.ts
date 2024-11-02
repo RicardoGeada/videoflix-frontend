@@ -2,63 +2,77 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import {
-  AbstractControlOptions,
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { FormInputComponent } from '../shared/components/form-input/form-input.component';
-import { passwordsMatchValidator } from '../sign-up-page/validators/passwordsMatch.validator';
 import { BackendApiService } from '../services/backend-api/backend-api.service';
+import { FormService } from '../services/form/form.service';
+import { MessageToastService } from '../services/message-toast/message-toast.service';
 
 @Component({
   selector: 'app-forgot-password-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, FormInputComponent],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    ReactiveFormsModule,
+    FormInputComponent,
+  ],
   templateUrl: './forgot-password-page.component.html',
-  styleUrl: './forgot-password-page.component.scss'
+  styleUrl: './forgot-password-page.component.scss',
 })
 export class ForgotPasswordPageComponent {
-
+  /**
+   * Form group for handling form inputs.
+   */
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private bs: BackendApiService) {
-    this.form = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-      },
-    );
+  /**
+   * Constructor to inject services and initialize the form group.
+   * @param fb - FormBuilder instance for creating the reactive form.
+   * @param bs - BackendApiService for handling API requests.
+   * @param formService - FormService for form validation utilities.
+   * @param messageToastService - MessageToastService for displaying messages.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private bs: BackendApiService,
+    private formService: FormService,
+    private messageToastService: MessageToastService
+  ) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
+  /**
+   * Handles form submission, triggers validation if the form is invalid,
+   * otherwise initiates the forgot password process.
+   */
   onSubmit() {
     if (this.form.valid) {
       const email = this.form.get('email')?.value;
-      this.handleForgotPassword(email)
+      this.handleForgotPassword(email);
     } else {
-      this.validateAllFormFields(this.form);
+      this.formService.validateAllFormFields(this.form);
     }
   }
 
-
+  /**
+   * Performs the forgot password request and handles the response or error.
+   * @param email - The user's email address.
+   */
   async handleForgotPassword(email: string) {
-    	try {
-        const response : any = await this.bs.forgotPassword(email);
-        console.log(response);
-      } catch (error) {
-        console.log(error)
-      }
-  }
-
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((field) => {
-      const control = formGroup.get(field);
-      if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateAllFormFields(control);
-      }
-    });
+    try {
+      const response: any = await this.bs.forgotPassword(email);
+      console.log(response);
+      this.messageToastService.setSuccess(response.detail);
+    } catch (error: any) {
+      console.log(error);
+      this.messageToastService.setError(error.error.detail);
+    }
   }
 }

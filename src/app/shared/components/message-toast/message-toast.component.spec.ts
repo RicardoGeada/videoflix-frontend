@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErrorToastComponent } from './error-toast.component';
+import { MessageToastComponent } from './message-toast.component';
 
-describe('ErrorToastComponent', () => {
-  let component: ErrorToastComponent;
-  let fixture: ComponentFixture<ErrorToastComponent>;
+describe('MessageToastComponent', () => {
+  let component: MessageToastComponent;
+  let fixture: ComponentFixture<MessageToastComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ErrorToastComponent]
+      imports: [MessageToastComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ErrorToastComponent);
+    fixture = TestBed.createComponent(MessageToastComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
