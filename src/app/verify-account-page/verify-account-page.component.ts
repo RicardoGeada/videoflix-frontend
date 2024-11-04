@@ -15,21 +15,32 @@ export class VerifyAccountPageComponent {
 
   uid: string | null = '';
   token: string | null  = '';
-  isValidUrl: boolean = true;
+  isValidUrl: boolean = false;
 
-  constructor(private activeRoute: ActivatedRoute, private bs: BackendApiService) {}
+  /**
+   * Constructor to inject services.
+   * @param bs - BackendApiService for handling API requests.
+   * @param route - ActivatedRoute for query parameter.
+   */
+  constructor(private route: ActivatedRoute, private bs: BackendApiService) {}
 
   ngOnInit() {
-    this.uid = this.activeRoute.snapshot.queryParamMap.get('uid');
-    this.token = this.activeRoute.snapshot.queryParamMap.get('token');
+    // get uid and token
+    this.uid = this.route.snapshot.queryParamMap.get('uid');
+    this.token = this.route.snapshot.queryParamMap.get('token');
 
-    if (!this.uid || !this.token) {
-      this.isValidUrl = false;
-    } else {
+    // chek if url is valid
+    if (this.uid && this.token) {
+      this.isValidUrl = true;
       this.handleVerifyAccount(this.uid, this.token);
-    }
+    } 
   }
 
+
+  /**
+   * Performs the account verification request and handles the response or error.
+   * @param password - The user's new password.
+   */
   async handleVerifyAccount(uid: string, token: string) {
     try {
       const response : any = await this.bs.verifyAccount(uid, token);
