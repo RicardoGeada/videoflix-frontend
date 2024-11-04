@@ -27,6 +27,8 @@ export class AuthInterceptorService implements HttpInterceptor {
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401 && !req.url.includes('api/token/refresh') && this.authService.getResfreshToken()) {
             return this.tryRefreshingAccessToken(req, next);
+          } else if (req.url.includes('api/register')) {
+            return throwError(() => error);
           } else {
             this.authService.logout();
             return throwError(() => error);

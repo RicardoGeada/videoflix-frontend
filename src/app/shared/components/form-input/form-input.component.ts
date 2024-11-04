@@ -13,17 +13,27 @@ import { CommonModule } from '@angular/common';
 export class FormInputComponent {
   @Input() form!: FormGroup;
   @Input() controlName!: string;
-  @Input() type: string = 'text';
+  @Input() type: 'text' | 'password' | 'email' = 'text';
   @Input() placeholder: string = '';
+  patternValue: string = '';
 
   @Input() passwordImgSrc : string = 'visibility.svg';
 
+
+  ngOnInit() {
+    if (this.type == 'password' && this.controlName == 'password') {
+      this.patternValue = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$';
+    }
+  }
+
   getErrorType(): string | null {
     const control = this.form.get(this.controlName);
+    console.log('error', control?.errors)
     if (!control || !control.errors) return null;
     if (control.errors['required']) return 'required';
     if (control.errors['email']) return 'email';
     if (control.errors['passwordsMismatch']) return 'passwordsMismatch';
+    if (control.errors['pattern']) return 'pattern';
     return null;
   }
 
