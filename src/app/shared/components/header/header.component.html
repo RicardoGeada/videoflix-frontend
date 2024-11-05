@@ -1,5 +1,5 @@
-
-<!-- logo -->
+<div class="header-container" [class]="{'pos-absolute': position == 'absolute'}">
+    <!-- logo -->
 <picture>
     <source media="(max-width: 640px)" srcset="/assets/img/general/videoflix-logo.svg">
     <img id="header-logo" src="/assets/img/general/videoflix-logo-with-text.svg" alt="videoflix logo">
@@ -9,3 +9,8 @@
  @if(button == 'login') {
     <a role="button" href="/login" class="btn-primary">Log in</a>
  }
+
+ @if(button == 'logout') {
+    <a role="button" href="/login" class="btn-primary" (click)="this.authService.logout()">Log out</a>
+ }
+</div>
