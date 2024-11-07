@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
+import { Video } from '../../shared/interfaces/video';
 
 @Component({
   selector: 'app-vjs-player',
@@ -23,7 +24,15 @@ export class VjsPlayerComponent {
 
   // See options: https://videojs.com/guides/options
 
-  @Input() video!: any;
+  @Input() video: Video = {
+    id: 0,
+    created_at: '',
+    title: '',
+    description: '',
+    genres: [],
+    thumbnail_url: '',
+    video_url: '',
+  };
 
   defaultOptions = {
     fluid: true,
@@ -50,35 +59,7 @@ export class VjsPlayerComponent {
 
   constructor() {}
 
-  // Instantiate a Video.js player OnInit
-  ngOnInit() {
-    this.player = videojs(
-      this.target.nativeElement,
-      this.options,
-      function onPlayerReady() {
-        console.log('onPlayerReady', this);
-      }
-    );
-
-    this.player.on('useractive', () => {
-      this.userActivityChange.emit(true);  // Aktiv
-    });
-    this.player.on('userinactive', () => {
-      this.userActivityChange.emit(false); // Inaktiv
-    });
-
-    this.addCustomButtons();
-    this.addVideoTitle();
-  }
-
-  // Dispose the player OnDestroy
-  ngOnDestroy() {
-    if (this.player) {
-      this.player.dispose();
-    }
-  }
-
-   get options() {
+  get options() {
     const sources = {
       src: this.video.video_url,
       type: 'application/vnd.apple.mpegurl',
@@ -91,11 +72,55 @@ export class VjsPlayerComponent {
     };
   }
 
+  /**
+   * Angular lifecycle hook that initializes the Video.js player instance with configured options.
+   * Sets up user activity event listeners and custom buttons (rewind, forward) and video title display.
+   */
+  ngOnInit() {
+    this.player = videojs(
+      this.target.nativeElement,
+      this.options,
+      function onPlayerReady() {
+        console.log('onPlayerReady', this);
+      }
+    );
+    this.setUpActivityEventlisteners();
+    this.addCustomButtons();
+    this.addVideoTitle();
+  }
+
+  /**
+   * Angular lifecycle hook that disposes of the Video.js player instance when the component is destroyed.
+   */
+  ngOnDestroy() {
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
+
+  /**
+   * Sets up user activity event listeners.
+   */
+  setUpActivityEventlisteners() {
+    this.player.on('useractive', () => {
+      this.userActivityChange.emit(true); // Aktiv
+    });
+    this.player.on('userinactive', () => {
+      this.userActivityChange.emit(false); // Inaktiv
+    });
+  }
+
+  /**
+   * Adds custom forward and rewind buttons to the Video.js control bar.
+   */
   addCustomButtons() {
     this.addRewindButton();
     this.addForwardButton();
   }
 
+  /**
+   * Adds a custom rewind button that rewinds the video by 10 seconds when clicked.
+   */
   addRewindButton() {
     const Button = videojs.getComponent('Button');
 
@@ -122,6 +147,9 @@ export class VjsPlayerComponent {
     });
   }
 
+  /**
+   * Adds a custom forward button that advances the video by 10 seconds when clicked.
+   */
   addForwardButton() {
     const Button = videojs.getComponent('Button');
 
@@ -148,6 +176,9 @@ export class VjsPlayerComponent {
     });
   }
 
+  /**
+   * Adds a video title display element to the control bar with the video's title.
+   */
   addVideoTitle() {
     const Component = videojs.getComponent('Component');
 
