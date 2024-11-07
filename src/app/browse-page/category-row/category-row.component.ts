@@ -7,8 +7,8 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { ContentService } from '../../services/content/content.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { VideoSliderItemComponent } from '../video-slider-item/video-slider-item.component';
+import { Video } from '../../shared/interfaces/video';
 
 @Component({
   selector: 'app-category-row',
@@ -21,7 +21,7 @@ export class CategoryRowComponent {
 
   @Input('genre') genre!: {id:number, name: string};
 
-  @Input('categoryVideos') videos: any[] = [];
+  @Input('categoryVideos') videos: Video[] = [];
 
   @ViewChild('slider') slider!: ElementRef<HTMLDivElement>;
 
@@ -44,7 +44,7 @@ export class CategoryRowComponent {
    * @constructor
    * @param {ChangeDetectorRef} cdr - Service for manually triggering change detection.
    */
-  constructor(private cdr: ChangeDetectorRef, private contentService: ContentService, private sanitizer: DomSanitizer) {}
+  constructor(private cdr: ChangeDetectorRef, private contentService: ContentService) {}
 
 
   /**
@@ -65,19 +65,22 @@ export class CategoryRowComponent {
     return this.categoryRowHeight;
   }
 
-
-  async loadVideos() {
-    const response: any = await this.contentService.getGenreVideos(this.genre.id, (6 * this.itemsInRow + 2), this.sliderIndex);
-    this.videos = response.results;
-    console.log(response);
+  /**
+   * Loads the videos data from the content service.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
+  async loadVideos(): Promise<void> {
+    try {
+      const response: any = await this.contentService.getGenreVideos(this.genre.id, (6 * this.itemsInRow + 2), this.sliderIndex); // max. 38 videos
+      this.videos = response.results;
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+    
   }
-
-  // async loadThumbnail(url: string) {
-  //   const response : any = await this.contentService.getThumbnail(url);
-  //   const objectURL = URL.createObjectURL(response);
-  //   const thumbnailUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-  //   return thumbnailUrl;
-  // }
 
 
   /**
@@ -388,7 +391,5 @@ export class CategoryRowComponent {
       }
     }
   }
-
-
-
+  
 }

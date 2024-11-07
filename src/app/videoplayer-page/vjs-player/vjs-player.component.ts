@@ -28,7 +28,7 @@ export class VjsPlayerComponent {
   defaultOptions = {
     fluid: true,
     aspectRatio: '16:9',
-    autoplay: false,
+    autoplay: true,
     controls: true,
     controlBar: {
       subsCapsButton: true,
@@ -48,7 +48,7 @@ export class VjsPlayerComponent {
 
   @Output() userActivityChange = new EventEmitter<boolean>();
 
-  constructor(private elementRef: ElementRef) {}
+  constructor() {}
 
   // Instantiate a Video.js player OnInit
   ngOnInit() {

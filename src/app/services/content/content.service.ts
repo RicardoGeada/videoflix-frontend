@@ -31,4 +31,9 @@ export class ContentService {
   }
 
 
+  getBillboardVideo() {
+    const url = environment.baseURL + '/api/videos/billboard/';
+    return lastValueFrom(this.http.get(url));
+  }
+
 }
