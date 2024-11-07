@@ -72,7 +72,7 @@ export class VideoDetailComponent {
         const response: any = await this.contentService.getVideo(this.videoId);
         console.log(response);
         this.video = response || {};
-      } catch (error) {
+      } catch (error : any) {
         console.error(error);
       }
     }

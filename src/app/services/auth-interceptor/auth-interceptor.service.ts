@@ -1,8 +1,9 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { filter, take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
 
 
@@ -29,6 +30,9 @@ export class AuthInterceptorService implements HttpInterceptor {
             return this.tryRefreshingAccessToken(req, next);
           } else if (req.url.includes('api/register') || req.url.includes('api/password-reset-confirm')) {
             return throwError(() => error);
+          } else if (error.status === 404) {
+              this.router.navigate(['/404'])
+              return throwError(() => error);
           } else {
             this.authService.logout();
             return throwError(() => error);
