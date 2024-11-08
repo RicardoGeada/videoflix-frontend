@@ -1,0 +1,32 @@
+<app-header [button]="'back'"></app-header>
+
+<div class="imprint-content">
+  <h2>Imprint</h2>
+  <h3>Responsible person</h3>
+  <p>
+   {{ name}} 
+  </p>
+  <h4>Postal address:</h4>
+  <p>
+    {{ street }}<br />
+    {{ city }}
+  </p>
+  <h4>Contact:</h4>
+  <p>
+    Phone: {{ phone }}<br/>
+    E-Mail: {{ email }}
+  </p>
+  <h3>Notes on the website</h3>
+  <p>
+    <em>
+      The imprint was created with the help of the
+      <a
+        href="https://www.activemind.de/datenschutz/generatoren/impressum/"
+        target="_blank"
+        class="text-link"
+      >
+        imprint generator of activeMind AG (version 2024-07-05)</a
+      >.
+    </em>
+  </p>
+</div>

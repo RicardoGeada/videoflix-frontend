@@ -8,6 +8,7 @@ import { BrowsePageComponent } from './browse-page/browse-page.component';
 import { VideoplayerPageComponent } from './videoplayer-page/videoplayer-page.component';
 import { VerifyAccountPageComponent } from './verify-account-page/verify-account-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { ImprintComponent } from './imprint/imprint.component';
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent},
@@ -19,4 +20,5 @@ export const routes: Routes = [
     { path: 'watch/:id', component: VideoplayerPageComponent},
     { path: 'verify-account', component: VerifyAccountPageComponent},
     { path: '404', component: NotFoundPageComponent},
+    { path: 'imprint', component: ImprintComponent},
 ];

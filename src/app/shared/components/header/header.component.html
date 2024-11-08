@@ -13,4 +13,10 @@
  @if(button == 'logout') {
     <a role="button" href="/login" class="btn-primary" (click)="this.authService.logout()">Log out</a>
  }
+
+ @if(button == 'back') {
+    <button class="btn-icon btn-back" (click)="goBack()">
+        <img src="/assets/img/general/arrow_back.svg" alt="back arrow">
+    </button>
+ }
 </div>

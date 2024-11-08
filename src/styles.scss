@@ -52,7 +52,7 @@ button {
 }
 
 
-.btn-secondary{ //blue
+.btn-secondary{ 
     background-color: #FFFFFF;
     color: $color-primary;
     padding: 12px 24px;
@@ -76,6 +76,23 @@ button {
 
     &:disabled {
         background-color: $color-primary-disabled;
+    }
+}
+
+
+.btn-icon {
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    &:hover, &:focus {
+        background-color: $color-primary-hover !important;
+    }
+
+    &:active {
+        background-color: $color-primary-active !important;
+    }
+
+    &:disabled {
+        background-color: $color-primary-disabled !important;
     }
 }
 
