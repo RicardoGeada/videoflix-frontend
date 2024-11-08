@@ -9,6 +9,7 @@ import { VideoplayerPageComponent } from './videoplayer-page/videoplayer-page.co
 import { VerifyAccountPageComponent } from './verify-account-page/verify-account-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { ImprintComponent } from './imprint/imprint.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent},
@@ -21,4 +22,5 @@ export const routes: Routes = [
     { path: 'verify-account', component: VerifyAccountPageComponent},
     { path: '404', component: NotFoundPageComponent},
     { path: 'imprint', component: ImprintComponent},
+    { path: 'privacy-policy', component: PrivacyPolicyComponent},
 ];

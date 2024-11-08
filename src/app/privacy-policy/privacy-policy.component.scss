@@ -8,8 +8,19 @@
   background-color: #141414;
 }
 
-.imprint-content {
-  margin: 0 96px;
+.privacy-policy-content {
+  margin: 32px 96px;
+
+  ul {
+    margin: 16px 0;
+  }
+  li {
+    list-style-position: inside;
+  }
+
+  a {
+    word-break: break-all;
+  }
 }
 
 h2,
@@ -32,7 +43,7 @@ h4 {
 }
 
 @media (max-width: 640px) {
-  .imprint-content {
-    margin: 0 16px;
+  .privacy-policy-content {
+    margin: 16px;
   }
 }
