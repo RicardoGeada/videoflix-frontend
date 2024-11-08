@@ -10,12 +10,25 @@ export class ContentService {
 
   constructor(private http: HttpClient) { }
 
-  getGenres() {
+  /**
+   * Retrieves a list of available genres.
+   *
+   * @returns {Promise<any>} A promise that resolves with the list of genres from the API.
+   */
+  getGenres(): Promise<any> {
     const url = environment.baseURL + '/api/genres/';
     return lastValueFrom(this.http.get(url));
   }
 
-  getGenreVideos(genreId:number, limit: number, offset: number) {
+  /**
+   * Retrieves a paginated list of videos for a specified genre.
+   *
+   * @param {number} genreId - The ID of the genre to filter videos by.
+   * @param {number} limit - The maximum number of videos to retrieve.
+   * @param {number} offset - The starting index for pagination.
+   * @returns {Promise<any>} A promise that resolves with the list of videos in the specified genre.
+   */
+  getGenreVideos(genreId:number, limit: number, offset: number): Promise<any> {
     let params = new HttpParams()
       .set('genre', genreId.toString())
       .set('limit', limit.toString())
@@ -25,13 +38,25 @@ export class ContentService {
     return lastValueFrom(this.http.get(url, { params }));
   }
 
-  getVideo(id: string) {
+
+  /**
+   * Retrieves details of a specific video by its ID.
+   *
+   * @param {string} id - The unique identifier for the video.
+   * @returns {Promise<any>} A promise that resolves with the details of the specified video.
+   */
+  getVideo(id: string): Promise<any> {
     const url = environment.baseURL + '/api/videos/' + id + '/';
     return lastValueFrom(this.http.get(url));
   }
 
 
-  getBillboardVideo() {
+  /**
+   * Retrieves the featured billboard video.
+   *
+   * @returns {Promise<any>} A promise that resolves with the featured billboard video data.
+   */
+  getBillboardVideo(): Promise<any> {
     const url = environment.baseURL + '/api/videos/billboard/';
     return lastValueFrom(this.http.get(url));
   }
