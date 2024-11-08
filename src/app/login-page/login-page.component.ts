@@ -7,13 +7,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { FormService } from '../services/form/form.service';
-import { MessageToastComponent } from '../shared/components/message-toast/message-toast.component';
 import { MessageToastService } from '../services/message-toast/message-toast.service';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, FormInputComponent, ReactiveFormsModule, MessageToastComponent],
+  imports: [HeaderComponent, FooterComponent, FormInputComponent, ReactiveFormsModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
@@ -47,6 +46,17 @@ export class LoginPageComponent {
       rememberMe: [false],
     });
   }
+
+  /**
+   * Lifecycle hook to check for an existing access token on component initialization.
+   * Handle automatic login.
+   */
+  ngOnInit() {
+    if(this.as.getAccessToken()) {
+      this.router.navigate(['/browse'])
+    }
+  }
+
 
   /**
    * Handles form submission, triggers validation if the form is invalid,
