@@ -57,6 +57,20 @@ export class VideoDetailComponent {
     this.breakpointService.isMobile().subscribe((result) => {
       this.isMobile = result.matches;
     });
+    this.handleBackgroundScroll();
+  }
+
+  /**
+   * Handles the background scroll behavior based on the device type.
+   * Disables scrolling on mobile devices by setting the body's overflow to 'hidden'.
+   * Restores default scrolling behavior on non-mobile devices.
+   */
+  handleBackgroundScroll() {
+    if (this.isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   /**
@@ -72,7 +86,7 @@ export class VideoDetailComponent {
         const response: any = await this.contentService.getVideo(this.videoId);
         console.log(response);
         this.video = response || {};
-      } catch (error : any) {
+      } catch (error: any) {
         console.error(error);
       }
     }
@@ -83,6 +97,10 @@ export class VideoDetailComponent {
    */
   closeModal() {
     this.router.navigate(['/browse']);
+    // activate background scroll
+    if (this.isMobile) {
+      document.body.style.overflow = '';
+    }
   }
 
   /**
