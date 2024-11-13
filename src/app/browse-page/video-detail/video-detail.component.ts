@@ -101,6 +101,22 @@ export class VideoDetailComponent {
     if (this.isMobile) {
       document.body.style.overflow = '';
     }
+    this.resetVideoData();
+  }
+
+  /**
+   * Resets the video data.
+   */
+  resetVideoData() {
+    this.video = {
+      id: 0,
+      created_at: '',
+      title: '',
+      description: '',
+      genres: [],
+      thumbnail_url: '',
+      video_url: '',
+    }
   }
 
   /**
