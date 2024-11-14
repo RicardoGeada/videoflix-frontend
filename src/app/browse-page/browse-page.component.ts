@@ -6,6 +6,7 @@ import { CategoryRowComponent } from './category-row/category-row.component';
 import { ContentService } from '../services/content/content.service';
 import { VideoDetailComponent } from './video-detail/video-detail.component';
 import { BreakpointService } from '../services/breakpoint/breakpoint.service';
+import { LoaderService } from '../services/loader/loader.service';
 
 @Component({
   selector: 'app-browse-page',
@@ -26,7 +27,8 @@ export class BrowsePageComponent {
 
   constructor(
     private contentService: ContentService,
-    private breakpointService: BreakpointService
+    private breakpointService: BreakpointService,
+    private loaderService: LoaderService,
   ) {}
 
   /**
@@ -49,11 +51,14 @@ export class BrowsePageComponent {
    */
   async loadGenres(): Promise<void> {
     try {
+      this.loaderService.start();
       const response: any = await this.contentService.getGenres();
       this.genres = response;
       console.log(response);
     } catch (error) {
       console.error(error);
+    } finally {
+      this.loaderService.stop();
     }
   }
 }

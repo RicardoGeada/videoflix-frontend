@@ -4,6 +4,7 @@ import Player from 'video.js/dist/types/player';
 import videojs from 'video.js';
 import { Router } from '@angular/router';
 import { Video } from '../../shared/interfaces/video';
+import { LoaderService } from '../../services/loader/loader.service';
 
 @Component({
   selector: 'app-billboard',
@@ -36,7 +37,7 @@ export class BillboardComponent {
 
   maxPlayTime: number = 5;
 
-  constructor(private contentService: ContentService, private router: Router) {}
+  constructor(private contentService: ContentService, private router: Router, private loaderService: LoaderService) {}
 
   /**
    * Gets the configuration options for the video player.
@@ -118,11 +119,14 @@ export class BillboardComponent {
    */
   async loadBillboardVideo(): Promise<void> {
     try {
+      this.loaderService.start();
       const response: any = await this.contentService.getBillboardVideo();
       this.video = response;
       console.log(response);
     } catch (error) {
       console.error(error);
+    } finally {
+      this.loaderService.stop();
     }
   }
 

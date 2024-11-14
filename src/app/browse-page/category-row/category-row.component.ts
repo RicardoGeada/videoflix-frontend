@@ -9,6 +9,7 @@ import {
 import { ContentService } from '../../services/content/content.service';
 import { VideoSliderItemComponent } from '../video-slider-item/video-slider-item.component';
 import { Video } from '../../shared/interfaces/video';
+import { LoaderService } from '../../services/loader/loader.service';
 
 @Component({
   selector: 'app-category-row',
@@ -44,7 +45,7 @@ export class CategoryRowComponent {
    * @constructor
    * @param {ChangeDetectorRef} cdr - Service for manually triggering change detection.
    */
-  constructor(private cdr: ChangeDetectorRef, private contentService: ContentService) {}
+  constructor(private cdr: ChangeDetectorRef, private contentService: ContentService, private loaderService: LoaderService) {}
 
 
   /**
@@ -73,11 +74,14 @@ export class CategoryRowComponent {
    */
   async loadVideos(): Promise<void> {
     try {
+      this.loaderService.start();
       const response: any = await this.contentService.getGenreVideos(this.genre.id, (6 * this.itemsInRow + 2), this.sliderIndex); // max. 38 videos
       this.videos = response.results;
       console.log(response);
     } catch (error) {
       console.error(error);
+    } finally {
+      this.loaderService.stop();
     }
     
   }

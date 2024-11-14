@@ -5,6 +5,7 @@ import { BreakpointService } from '../services/breakpoint/breakpoint.service';
 import { ContentService } from '../services/content/content.service';
 import { ActivatedRoute } from '@angular/router';
 import { Video } from '../shared/interfaces/video';
+import { LoaderService } from '../services/loader/loader.service';
 
 @Component({
   selector: 'app-videoplayer-page',
@@ -39,7 +40,8 @@ export class VideoplayerPageComponent {
   constructor(
     private breakpointService: BreakpointService,
     private contentService: ContentService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loaderService: LoaderService,
   ) {}
 
   /**
@@ -64,11 +66,14 @@ export class VideoplayerPageComponent {
   async loadVideo(): Promise<void> {
     if (this.videoId) {
       try {
+        this.loaderService.start();
         const response: any = await this.contentService.getVideo(this.videoId);
         console.log(response);
         this.video = response || {};
       } catch (error) {
         console.error(error);
+      } finally {
+        this.loaderService.stop();
       }
     }
   }

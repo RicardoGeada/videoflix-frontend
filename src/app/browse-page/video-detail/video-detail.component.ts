@@ -5,6 +5,7 @@ import { ContentService } from '../../services/content/content.service';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { BreakpointService } from '../../services/breakpoint/breakpoint.service';
 import { Video } from '../../shared/interfaces/video';
+import { LoaderService } from '../../services/loader/loader.service';
 
 @Component({
   selector: 'app-video-detail',
@@ -40,7 +41,8 @@ export class VideoDetailComponent {
     private route: ActivatedRoute,
     private router: Router,
     private contentService: ContentService,
-    private breakpointService: BreakpointService
+    private breakpointService: BreakpointService,
+    private loaderService: LoaderService,
   ) {}
 
   /**
@@ -83,11 +85,14 @@ export class VideoDetailComponent {
   async loadVideo(): Promise<void> {
     if (this.videoId) {
       try {
+        this.loaderService.start();
         const response: any = await this.contentService.getVideo(this.videoId);
         console.log(response);
         this.video = response || {};
       } catch (error: any) {
         console.error(error);
+      } finally {
+        this.loaderService.stop();
       }
     }
   }

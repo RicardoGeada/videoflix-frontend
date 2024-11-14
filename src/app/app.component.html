@@ -3,3 +3,7 @@
 @if (messageToastService.response.message != '') {
     <app-message-toast></app-message-toast>
 }
+@if (loaderService.isLoading$ | async) {
+    <app-loader></app-loader>
+}
+
