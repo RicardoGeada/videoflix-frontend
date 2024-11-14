@@ -115,7 +115,7 @@ export class ResetPasswordPageComponent {
         'The password has been successfully reset.'
       );
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       this.messageToastService.setError(
         'Invalid link. Please request a new link.'
       );

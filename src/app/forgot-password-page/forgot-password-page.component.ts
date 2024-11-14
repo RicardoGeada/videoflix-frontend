@@ -71,7 +71,7 @@ export class ForgotPasswordPageComponent {
       console.log(response);
       this.messageToastService.setSuccess(response.detail);
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       this.messageToastService.setError(error.error.detail);
     }
   }
