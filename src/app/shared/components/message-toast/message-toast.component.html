@@ -1,0 +1,16 @@
+@if(response) {
+    <div class="message-toast" [ngClass]="{'slide-in': isVisible, 'success' : response.type == 'success', 'error' : response.type == 'error'}">
+        <img src="/assets/img/general/exclamation-circle-fill.svg" alt="exclamation-circle-fill">
+        <span class="message"> {{ response.message }} </span>
+        @if (button) {
+            <button class="btn-cta btn-secondary" (click)="button.function()">
+                {{ button.name }}
+            </button>
+        }
+        <div class="v-separator"></div>
+        <button class="btn-close" (click)="close()">
+            <img src="/assets/img/general/close.svg" alt="close">
+        </button>
+    </div>
+}
+

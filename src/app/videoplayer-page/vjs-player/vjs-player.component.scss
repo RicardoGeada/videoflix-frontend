@@ -64,8 +64,19 @@
 
   // pause
   .vjs-paused .vjs-icon-placeholder:before {
-    content: "";
-    background-image: url("/assets/img/videoplayer/play_arrow.svg");
+      content: "" !important;
+      background-image: url("/assets/img/videoplayer/play_arrow.svg");
+      background-repeat: no-repeat;
+      background-size: 48px;
+      background-position: 55% calc(50% - 0px);
+      border: none !important;
+      box-shadow: none !important;  
+  }
+
+  // replay
+  .vjs-ended .vjs-icon-placeholder:before {
+    content: "" !important;
+    background-image: url("/assets/img/videoplayer/replay.svg");
     background-repeat: no-repeat;
     background-size: 48px;
     background-position: 55% calc(50% - 0px);

@@ -1,26 +1,29 @@
 <div class="billboard-row">
-  <div class="billboard-container" (mouseenter)="playVideo()" (mouseleave)="stopVideo()" (touchstart)="playVideo()" (touchend)="stopVideo()">
+  <div
+    class="billboard-container"
+    (mouseenter)="playVideo()"
+    (mouseleave)="stopVideo()"
+    (touchstart)="playVideo()"
+    (touchend)="stopVideo()"
+  >
     <div class="billboard-video-info-container" #infoContainer>
-      <h1 class="billboard-title" #billboardTitle>The Secret Life of Turtles</h1>
-      <p>
-        Explore the mysterious world of turtles as they navigate oceans and
-        beaches, playing a vital role in marine ecosystems. Discover their ancient
-        origins, unique behaviors, and the efforts to protect them from
-        extinction.
+      <h1 class="billboard-title" #billboardTitle>{{ video.title }}</h1>
+      <p class="billboard-description">
+        {{ video.description }}
       </p>
-      <button class="btn-primary">
-        <!-- img -->
+      <button class="btn-primary btn-play" (click)="watchVideo(video.id)">
+        <img src="/assets/img/videoplayer/play_arrow.svg" alt="play" />
         <span>Play</span>
       </button>
     </div>
-  
-    <video class="billboard-video" #billboardVideo muted>
-      <source
-        src="assets/videos/the_secret_life_of_turtles.mp4"
-        type="video/mp4"
-      />
+
+    <video
+      #target
+      class="billboard-video video-js"
+      preload="metadata"
+      playsinline
+    >
       Your browser does not support the video tag.
     </video>
   </div>
 </div>
-

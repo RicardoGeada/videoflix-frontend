@@ -1,7 +1,10 @@
-<app-header></app-header>
+<app-header [button]="'logout'" [position]="!isMobile ? 'absolute' : null"></app-header>
 
 <div class="browse-page-content">
-    <app-billboard></app-billboard>
+    @if(!isMobile) {
+        <app-billboard></app-billboard>
+    }
+   
     <div class="categories-list">
         @for(genre of genres; track genre.id; let index = $index ) {
                 <app-category-row [genre]="genre"></app-category-row>

@@ -4,7 +4,7 @@
   <!-- desktop view -->
   <div class="overlay" (click)="closeModal()">
     <div class="modal" (click)="$event.stopPropagation()">
-      <button class="btn-close" (click)="closeModal()">
+      <button class="btn-icon btn-close" (click)="closeModal()">
         <img src="/assets/img/general/close.svg" alt="x" />
       </button>
     
@@ -15,7 +15,7 @@
         <div class="info-container">
           <h1>{{ video.title }}</h1>
           <p>{{ video.description }}</p>
-          <button class="btn-primary btn-play" (click)="playVideo(video.id)">
+          <button class="btn-primary btn-play" (click)="watchVideo(video.id)">
             <img src="/assets/img/videoplayer/play_arrow.svg" alt="play_arrow">
             <span>Play</span>
           </button>
@@ -28,14 +28,14 @@
     <!-- mobile view -->
     <div class="full-page">
       <div class="video-detail">
-        <app-header></app-header>
         <div class="img-container">
+          <app-header [button]="'logout'" [position]="'absolute'"></app-header>
           <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" />
         </div>
         <div class="info-container">
           <h1>{{ video.title }}</h1>
           <p>{{ video.description }}</p>
-          <button class="btn-primary btn-play" (click)="playVideo(video.id)">
+          <button class="btn-primary btn-play" (click)="watchVideo(video.id)">
             <img src="/assets/img/videoplayer/play_arrow.svg" alt="play_arrow">
             <span>Play</span>
           </button>

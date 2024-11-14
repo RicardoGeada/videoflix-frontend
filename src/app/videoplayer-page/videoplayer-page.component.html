@@ -1,22 +1,12 @@
 <div class="videoplayer-container">
-
-<div class="videoplayer-header" [class.hidden]="!isUserActive">
-  @if(!isMobile) {
-  <a href="/browse">
-    <img src="/assets/img/videoplayer/arrow_back.svg" alt="arrow-back" />
-  </a>
-  <div class="videoplayer-header-info">
-    Optimizing video for your screen 40%
-  </div>
-  <a href="/browse">
-    <img
-      class="videoflix-logo"
-      src="/assets/img/general/videoflix-logo.svg"
-      alt="videoflix-logo"
-    />
-  </a>
-  } @else {
-  <div class="logo-and-title">
+  <div class="videoplayer-header" [class.hidden]="!isUserActive">
+    @if(!isMobile) {
+    <a href="/browse">
+      <img src="/assets/img/videoplayer/arrow_back.svg" alt="arrow-back" />
+    </a>
+    <div class="videoplayer-header-info">
+      <!-- Optimizing video for your screen 40% -->
+    </div>
     <a href="/browse">
       <img
         class="videoflix-logo"
@@ -24,17 +14,29 @@
         alt="videoflix-logo"
       />
     </a>
-    <div class="videoplayer-header-video-title">{{ video.title }}</div>
+    } @else {
+    <div class="logo-and-title">
+      <a href="/browse">
+        <img
+          class="videoflix-logo"
+          src="/assets/img/general/videoflix-logo.svg"
+          alt="videoflix-logo"
+        />
+      </a>
+      <div class="videoplayer-header-video-title">{{ video.title }}</div>
+    </div>
+    <a href="/browse">
+      <img src="/assets/img/general/close.svg" alt="close" />
+    </a>
+
+    }
   </div>
-  <a href="/browse">
-    <img src="/assets/img/general/close.svg" alt="close" />
-  </a>
 
+  @if (video.video_url) {
+  <app-vjs-player
+    [video]="video"
+    (userActivityChange)="this.isUserActive = $event"
+  >
+  </app-vjs-player>
   }
-</div>
-
-
-@if (video) {
-<app-vjs-player [video]="video" (userActivityChange)="this.isUserActive = $event"> </app-vjs-player>
-}
 </div>

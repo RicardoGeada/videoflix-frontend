@@ -19,6 +19,8 @@ export class FormErrorComponent {
         return 'Invalid email address.';
       case 'passwordsMismatch':
         return 'Passwords must match.';
+      case 'pattern':
+        return 'The password must contain at least one uppercase letter, one lowercase letter, one number, one special character (e.g., @, $, !, %, *, ?, &), and be at least 8 characters long.';
       default:
         return '';
     }

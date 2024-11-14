@@ -37,7 +37,9 @@ button {
     font-size: 18px;
 
     &:hover, &:focus {
+        color: $color-text;
         background-color: $color-primary-hover;
+        text-decoration: none;
     }
 
     &:active {
@@ -46,6 +48,51 @@ button {
 
     &:disabled {
         background-color: $color-primary-disabled;
+    }
+}
+
+
+.btn-secondary{ 
+    background-color: #FFFFFF;
+    color: $color-primary;
+    padding: 12px 24px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+
+    font-size: 18px;
+
+    &:hover, &:focus {
+        color: $color-text;
+        background-color: $color-primary-hover;
+        text-decoration: none;
+    }
+
+    &:active {
+        color: $color-primary;
+    }
+
+    &:disabled {
+        background-color: $color-primary-disabled;
+    }
+}
+
+
+.btn-icon {
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    &:hover, &:focus {
+        background-color: $color-primary-hover !important;
+    }
+
+    &:active {
+        background-color: $color-primary-active !important;
+    }
+
+    &:disabled {
+        background-color: $color-primary-disabled !important;
     }
 }
 

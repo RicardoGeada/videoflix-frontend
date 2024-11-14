@@ -1,18 +1,18 @@
 <!-- Header -->
-<app-header></app-header>
+<app-header button="login"></app-header>
 
 <!-- Content -->
 <div class="home-page-content">
     <h1>Movies, TV shows, and more</h1>
     <h2>Watch whenever you want wherever you want</h2>
     <p>Enter your email to create or restart your subscription</p>
-    <div class="sign-up-container">
-        <input type="email" name="email" id="email" placeholder="Email Address">
+    <form class="sign-up-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input type="email" name="email" id="email" placeholder="Email Address" formControlName="email">
         <button class="btn-primary">
             <span>Sign Up</span>
             <img src="/assets/img/home-page/chevron_right.svg" alt="chevron right">
         </button>
-    </div>
+    </form>
 </div>
 
 <!-- Footer -->
