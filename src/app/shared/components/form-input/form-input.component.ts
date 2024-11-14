@@ -28,7 +28,7 @@ export class FormInputComponent {
 
   getErrorType(): string | null {
     const control = this.form.get(this.controlName);
-    console.log('error', control?.errors)
+    console.log('error', control?.errors);
     if (!control || !control.errors) return null;
     if (control.errors['required']) return 'required';
     if (control.errors['email']) return 'email';

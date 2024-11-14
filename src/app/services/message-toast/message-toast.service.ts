@@ -15,9 +15,9 @@ export class MessageToastService {
 
   constructor() {}
 
-  setError(message: string) {
+  setError(message: string = 'Oops, something went wrong') {
     this.response = {
-      message: message,
+      message: message || 'Oops, something went wrong',
       type: 'error',
     }
   }

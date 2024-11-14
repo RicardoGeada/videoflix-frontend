@@ -5,6 +5,7 @@ import { MessageToastComponent } from './shared/components/message-toast/message
 import { MessageToastService } from './services/message-toast/message-toast.service';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { LoaderService } from './services/loader/loader.service';
+import { ConsoleToggleService } from './services/console-toggle/console-toggle.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ import { LoaderService } from './services/loader/loader.service';
 export class AppComponent {
   title = 'videoflix-frontend';
 
-  constructor(public messageToastService: MessageToastService, public loaderService: LoaderService) {
-
+  constructor(public messageToastService: MessageToastService, public loaderService: LoaderService, private consoleToggleService: ConsoleToggleService) {
+    this.consoleToggleService.disableConsoleInProduction();
   }
 }
