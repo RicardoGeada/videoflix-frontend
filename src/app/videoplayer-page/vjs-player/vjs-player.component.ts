@@ -10,7 +10,20 @@ import {
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
 import { Video } from '../../shared/interfaces/video';
+import 'videojs-contrib-quality-levels';
 
+interface PlayerWithQualityLevels extends Player {
+  qualityLevels?: () => {
+    length: number;
+    [index: number]: {
+      height: number;
+      width: number;
+      bitrate: number;
+      enabled: boolean;
+    };
+    on: (event: string, callback: () => void) => void;
+  };
+}
 @Component({
   selector: 'app-vjs-player',
   standalone: true,
@@ -53,7 +66,7 @@ export class VjsPlayerComponent {
     playbackRates: [0.5, 1, 1.5, 2],
   };
 
-  player!: Player;
+  player!: PlayerWithQualityLevels;
 
   @Output() userActivityChange = new EventEmitter<boolean>();
 
@@ -85,6 +98,7 @@ export class VjsPlayerComponent {
       }
     );
     this.setUpActivityEventlisteners();
+    this.addQualitySelector();
     this.addCustomButtons();
     this.addVideoTitle();
   }
@@ -197,6 +211,101 @@ export class VjsPlayerComponent {
       this.player
         .getChild('controlBar')!
         .addChild('VideoTitle', { title: videoTitle }, 6);
+    });
+  }
+
+
+  /**
+   * Adds a custom quality selector to the control bar.
+   */
+  addQualitySelector() {
+    const MenuButton = videojs.getComponent('MenuButton');
+    const Menu = videojs.getComponent('Menu');
+    const MenuItem: any = videojs.getComponent('MenuItem');
+
+    class QualitySelectorButton extends MenuButton {
+      qualityLevels: any;
+      menu: any;
+      currentLabel: string = 'auto';
+
+      constructor(player: PlayerWithQualityLevels, options?: any) {
+        super(player, options);
+        this.addClass('vjs-quality-selector');
+        this.qualityLevels = player.qualityLevels?.();
+        if (this.qualityLevels) this.createQualityMenu();
+        this.updateButtonText();
+      }
+
+      createQualityMenu() {
+        this.menu = new Menu(this.player());
+        this.qualityLevels.on('addqualitylevel', () => this.updateQualityMenu());
+        this.updateQualityMenu();
+        this.addChild(this.menu);
+      }
+
+      updateQualityMenu() {
+        // remove all menu items
+        while (this.menu.children().length > 0) this.menu.removeChild(this.menu.children()[0]);
+        
+        // add auto
+        const autoMenuItem = this.createMenuItem('Auto', true, () => {
+          this.disableAllLevels();
+          this.setCurrentLabel('auto');
+          autoMenuItem.selected(true);
+        });
+        this.menu.addChild(autoMenuItem);
+
+        // add quality levels
+        this.qualityLevels.levels_.forEach((level: any, i: number) => {
+          const menuItem = this.createMenuItem(`${level.height}p`, false, () => {
+            this.disableAllLevels();
+            this.qualityLevels.levels_[i].enabled = true;
+            this.setCurrentLabel(`${level.height}p`);
+            menuItem.selected(true);
+          });
+          this.menu.addChild(menuItem);
+        });
+      
+      }
+
+      createMenuItem(label: string, selected: boolean, onClick: () => void) {
+        const menuItem = new MenuItem(this.player(), { label, selectable: true, selected });
+        menuItem.on('click', (event: Event) => {
+          event.stopPropagation();
+          onClick();
+        });
+        menuItem.on('touchstart', (e: Event) => {
+          e.stopPropagation();
+          e.preventDefault();
+          onClick(); 
+        });
+        return menuItem;
+      }
+
+      disableAllLevels() {
+        this.qualityLevels.levels_.forEach((level: any) => (level.enabled = false));
+        this.menu.children().forEach((child: any) => child.selected(false));
+      }
+
+      setCurrentLabel(label: string) {
+        this.currentLabel = label;
+        this.updateButtonText();
+      }
+
+      updateButtonText() {
+        if (this.el_) {
+          const span = this.el_.querySelector('.vjs-icon-placeholder');
+          if (span) span.textContent = this.currentLabel;
+        }
+      }
+    }
+
+    videojs.registerComponent('QualitySelectorButton', QualitySelectorButton);
+
+    this.player.ready(() => {
+      this.player
+        .getChild('controlBar')!
+        .addChild('QualitySelectorButton', {}, 7);
     });
   }
 }

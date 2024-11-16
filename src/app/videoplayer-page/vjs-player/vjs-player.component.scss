@@ -139,6 +139,35 @@
     line-height: 31.25px;
   }
 
+  // quality selector
+  .vjs-quality-selector {
+    width: 48px;
+    position: relative;
+    z-index: 1;
+
+    .vjs-icon-placeholder {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  .vjs-quality-selector select {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    border: none;
+    padding: 0px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .vjs-quality-menu {
+    color: white;
+    background-color: rgba(50, 50, 50, 0.8);
+    border-radius: 3px;
+    padding: 0px;
+  }
+  
+
   // subtitles / captions
   .vjs-subs-caps-button .vjs-icon-placeholder:before {
     content: "" !important;
