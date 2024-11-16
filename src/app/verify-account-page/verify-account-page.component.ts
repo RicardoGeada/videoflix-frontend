@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BackendApiService } from '../services/backend-api/backend-api.service';
 
 @Component({
@@ -16,15 +16,17 @@ export class VerifyAccountPageComponent {
   uid: string | null = '';
   token: string | null  = '';
   isValidUrl: boolean = false;
+  countdown: number = 3;
+  countdownInterval: any;
 
   /**
    * Constructor to inject services.
    * @param bs - BackendApiService for handling API requests.
    * @param route - ActivatedRoute for query parameter.
    */
-  constructor(private route: ActivatedRoute, private bs: BackendApiService) {}
+  constructor(private route: ActivatedRoute, private bs: BackendApiService, private router: Router) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     // get uid and token
     this.uid = this.route.snapshot.queryParamMap.get('uid');
     this.token = this.route.snapshot.queryParamMap.get('token');
@@ -32,8 +34,19 @@ export class VerifyAccountPageComponent {
     // chek if url is valid
     if (this.uid && this.token) {
       this.isValidUrl = true;
-      this.handleVerifyAccount(this.uid, this.token);
-    } 
+      await this.handleVerifyAccount(this.uid, this.token);
+    }
+
+    this.countdownInterval = setInterval(() => {
+      if (this.countdown > 0) this.countdown--;
+      else this.router.navigate(['/login'])
+    }, 1000)
+  }
+
+  ngOnDestroy(): void {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+    }
   }
 
 

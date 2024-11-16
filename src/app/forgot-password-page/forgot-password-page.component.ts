@@ -11,6 +11,7 @@ import { FormInputComponent } from '../shared/components/form-input/form-input.c
 import { BackendApiService } from '../services/backend-api/backend-api.service';
 import { FormService } from '../services/form/form.service';
 import { MessageToastService } from '../services/message-toast/message-toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password-page',
@@ -41,7 +42,8 @@ export class ForgotPasswordPageComponent {
     private fb: FormBuilder,
     private bs: BackendApiService,
     private formService: FormService,
-    private messageToastService: MessageToastService
+    private messageToastService: MessageToastService,
+    private router: Router,
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -70,6 +72,7 @@ export class ForgotPasswordPageComponent {
       const response: any = await this.bs.forgotPassword(email);
       console.log(response);
       this.messageToastService.setSuccess(response.detail);
+      this.router.navigate(['/login'])
     } catch (error: any) {
       console.error(error);
       this.messageToastService.setError(error.error.detail);

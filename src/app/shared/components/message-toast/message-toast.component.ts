@@ -42,7 +42,7 @@ export class MessageToastComponent {
     }, 50);
     setTimeout(() => {
       this.close();
-    }, 2500)
+    }, 3000)
   }
 
   close() {

@@ -50,7 +50,8 @@ export class ResetPasswordPageComponent {
     private bs: BackendApiService,
     private route: ActivatedRoute,
     private formService: FormService,
-    private messageToastService: MessageToastService
+    private messageToastService: MessageToastService,
+    private router: Router,
   ) {
     this.form = this.fb.group(
       {
@@ -114,6 +115,7 @@ export class ResetPasswordPageComponent {
       this.messageToastService.setSuccess(
         'The password has been successfully reset.'
       );
+      this.router.navigate(['/login'])
     } catch (error: any) {
       console.error(error);
       this.messageToastService.setError(
