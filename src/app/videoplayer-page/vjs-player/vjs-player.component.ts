@@ -249,7 +249,9 @@ export class VjsPlayerComponent {
         
         // add auto
         const autoMenuItem = this.createMenuItem('Auto', true, () => {
-          this.disableAllLevels();
+          this.qualityLevels.levels_.forEach((level: any) => (level.enabled = true));
+          this.menu.children().forEach((child: any) => child.selected(false));
+          this.setSelectedIndex(-1); // Update selectedIndex to -1 for adaptive streaming
           this.setCurrentLabel('auto');
           autoMenuItem.selected(true);
         });
@@ -260,6 +262,7 @@ export class VjsPlayerComponent {
           const menuItem = this.createMenuItem(`${level.height}p`, false, () => {
             this.disableAllLevels();
             this.qualityLevels.levels_[i].enabled = true;
+            this.setSelectedIndex(i);
             this.setCurrentLabel(`${level.height}p`);
             menuItem.selected(true);
           });
@@ -297,6 +300,11 @@ export class VjsPlayerComponent {
           const span = this.el_.querySelector('.vjs-icon-placeholder');
           if (span) span.textContent = this.currentLabel;
         }
+      }
+
+      setSelectedIndex(i: number) {
+        this.qualityLevels.selectedIndex_ = i;
+        this.qualityLevels.trigger({ type: 'change', selectedIndex: i });
       }
     }
 
