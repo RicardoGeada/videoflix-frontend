@@ -2,11 +2,23 @@
   flex: 0 0 calc(100% / var(--itemsInRow));
   aspect-ratio: 16 / 9;
   padding: 0 0.2vw;
+  transition: transform 150ms;
 
-  // delete
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .video-thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+
+    .video-thumbnail {
+      box-shadow: 0px 0px 2.5px rgba(0, 0, 0, 0.035),
+        0px 0px 20px rgba(0, 0, 0, 0.07);
+    }
+  }
 
   .cover-img {
     width: 100%;
@@ -14,5 +26,4 @@
     height: 100%;
     border-radius: 0.2vw;
   }
-  
 }
