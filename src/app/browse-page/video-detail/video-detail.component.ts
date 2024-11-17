@@ -58,8 +58,8 @@ export class VideoDetailComponent {
 
     this.breakpointService.isMobile().subscribe((result) => {
       this.isMobile = result.matches;
-    });
-    this.handleBackgroundScroll();
+      this.handleBackgroundScroll();
+    }); 
   }
 
   /**

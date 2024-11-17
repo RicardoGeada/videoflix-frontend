@@ -9,7 +9,8 @@
   position: relative;
   padding: 0 4%;
   touch-action: pan-y;
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .slider-control {
