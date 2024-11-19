@@ -1,19 +1,14 @@
 <app-header [button]="'login'"></app-header>
 
 <div class="verify-account-page-content">
-    <div class="verify-account-page-container">
-
-       
-        @if(isValidUrl) {
-            <h1>The account has been successfully activated.</h1>
-        } 
-        @else {
-            <h1>Invalid activation link.</h1>
-        }
-        <p>Navigate to login in {{ countdown }}s...</p>
-       
-      </div>
+  <div class="verify-account-page-container">
+    @if(isValidUrl) {
+    <h1>The account has been successfully activated.</h1>
+    } @else {
+    <h1>Invalid activation link.</h1>
+    }
+    <p>Navigate to login in {{ countdown }}s...</p>
+  </div>
 </div>
-
 
 <app-footer></app-footer>

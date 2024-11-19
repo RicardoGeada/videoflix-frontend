@@ -13,6 +13,7 @@ import { passwordsMatchValidator } from './validators/passwordsMatch.validator';
 import { BackendApiService } from '../services/backend-api/backend-api.service';
 import { FormService } from '../services/form/form.service';
 import { MessageToastService } from '../services/message-toast/message-toast.service';
+import { Router } from '@angular/router';
 
 
 
@@ -42,7 +43,7 @@ export class SignUpPageComponent {
    * @param formService - FormService for form validation utilities.
    * @param messageToastService - MessageToastService for displaying messages.
    */
-  constructor(private fb: FormBuilder, private bs: BackendApiService, private formService: FormService, private messageToastService: MessageToastService) {
+  constructor(private fb: FormBuilder, private bs: BackendApiService, private formService: FormService, private messageToastService: MessageToastService, private router: Router) {
     this.form = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -80,6 +81,7 @@ export class SignUpPageComponent {
       const password = this.form.get('password')?.value;
       await this.handleRegistration(email, password);
       this.form.reset();
+      this.router.navigate(['/login']);
     } else {
       this.formService.validateAllFormFields(this.form);
     }
