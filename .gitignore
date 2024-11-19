@@ -42,6 +42,7 @@ testem.log
 Thumbs.db
 
 # test video data
+test-assets/
 videos
 captions
 subtitles
