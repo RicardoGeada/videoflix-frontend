@@ -20,6 +20,7 @@ jobs:
 
     - name: Set up environment file
       run: |
+        mkdir -p src/environments
         echo "export const environment = {
           production: true,
           baseURL: '${{ secrets.BASE_URL }}',
