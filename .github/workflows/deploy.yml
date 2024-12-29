@@ -18,6 +18,18 @@ jobs:
       with:
         node-version: 18.13
 
+    - name: Set up environment file
+      run: |
+        echo "export const environment = {
+          production: true,
+          baseURL: '${{ secrets.BASE_URL }}',
+          imprintName: '${{ secrets.IMPRINT_NAME }}',
+          imprintStreet: '${{ secrets.IMPRINT_STREET }}',
+          imprintCity: '${{ secrets.IMPRINT_CITY }}',
+          imprintPhone: '${{ secrets.IMPRINT_PHONE }}',
+          imprintEmail: '${{ secrets.IMPRINT_EMAIL }}',
+        };" > src/environments/environment.ts
+
     - name: Install and build
       run: |
         npm i
