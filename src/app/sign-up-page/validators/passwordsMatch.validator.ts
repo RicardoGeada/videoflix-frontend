@@ -14,7 +14,7 @@ export function passwordsMatchValidator(
 
     if (
       confirmPasswordControl.errors &&
-      !confirmPasswordControl.errors['passwordMismatch']
+      !confirmPasswordControl.errors['passwordsMismatch']
     ) {
       // Return if another validator has already found an error on the confirmPasswordControl
       return null;

@@ -58,22 +58,9 @@ export class VideoDetailComponent {
 
     this.breakpointService.isMobile().subscribe((result) => {
       this.isMobile = result.matches;
-      this.handleBackgroundScroll();
     }); 
   }
 
-  /**
-   * Handles the background scroll behavior based on the device type.
-   * Disables scrolling on mobile devices by setting the body's overflow to 'hidden'.
-   * Restores default scrolling behavior on non-mobile devices.
-   */
-  handleBackgroundScroll() {
-    if (this.isMobile) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }
 
   /**
    * Loads video details from the content service based on the video ID.
