@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CategoryRowComponent } from './category-row.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CategoryRowComponent', () => {
   let component: CategoryRowComponent;
@@ -8,7 +9,7 @@ describe('CategoryRowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CategoryRowComponent]
+      imports: [CategoryRowComponent, HttpClientTestingModule]
     })
     .compileComponents();
     

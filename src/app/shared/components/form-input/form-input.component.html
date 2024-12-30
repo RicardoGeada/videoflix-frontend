@@ -1,21 +1,24 @@
-<div [class]="type + '-field-container'" [formGroup]="form">
+@if(form && controlName) {
+  <div [class]="type + '-field-container'" [formGroup]="form">
 
-  <input
-    [type]="type"
-    [placeholder]="placeholder"
-    [formControlName]="controlName"
-    [attr.id]="controlName"
-    [pattern]="patternValue"
-    #formInput
-  />
-
-  @if(type == 'password') {
-    <button type="button" (click)="togglePasswordVisibility(formInput)">
-        <img [src]="'/assets/img/general/' + passwordImgSrc" alt="visibility" class="visibility-icon">
-    </button> 
-  }
+    <input
+      [type]="type"
+      [placeholder]="placeholder"
+      [formControlName]="controlName"
+      [attr.id]="controlName"
+      [pattern]="patternValue"
+      #formInput
+    />
   
-  @if (form.get(controlName)?.touched && form.get(controlName)?.errors) {
-    <app-form-error [errorType]="getErrorType()"></app-form-error>
-  }
-</div>
+    @if(type == 'password') {
+      <button type="button" (click)="togglePasswordVisibility(formInput)">
+          <img [src]="'/assets/img/general/' + passwordImgSrc" alt="visibility" class="visibility-icon">
+      </button> 
+    }
+    
+    @if (form.get(controlName)?.touched && form.get(controlName)?.errors) {
+      <app-form-error [errorType]="getErrorType()"></app-form-error>
+    }
+  </div>
+}
+

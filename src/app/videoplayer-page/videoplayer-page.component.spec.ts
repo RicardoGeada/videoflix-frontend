@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VideoplayerPageComponent } from './videoplayer-page.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 
 describe('VideoplayerPageComponent', () => {
   let component: VideoplayerPageComponent;
@@ -8,7 +10,22 @@ describe('VideoplayerPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VideoplayerPageComponent]
+      imports: [VideoplayerPageComponent, HttpClientTestingModule],
+      providers: [
+              {
+                provide: ActivatedRoute,
+                useValue: {
+                  snapshot: {
+                    paramMap: {
+                      get: (key: string) => {
+                        if (key === 'id') return 'mock-id';
+                        return null;
+                      },
+                    },
+                  },
+                },
+              },
+            ],
     })
     .compileComponents();
     

@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BrowsePageComponent } from './browse-page.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('BrowsePageComponent', () => {
   let component: BrowsePageComponent;
@@ -8,10 +11,17 @@ describe('BrowsePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BrowsePageComponent]
-    })
-    .compileComponents();
-    
+      imports: [BrowsePageComponent, HttpClientTestingModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParamMap: of({ get: () => 'mock-vid' }),
+          },
+        },
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(BrowsePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

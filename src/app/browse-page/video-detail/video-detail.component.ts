@@ -17,6 +17,7 @@ import { LoaderService } from '../../services/loader/loader.service';
 export class VideoDetailComponent {
   videoId: string | null = null;
   private routeSub!: Subscription;
+  private breakpointSub!: Subscription;
   video: Video = {
     id: 0,
     created_at: '',
@@ -56,7 +57,7 @@ export class VideoDetailComponent {
       this.loadVideo();
     });
 
-    this.breakpointService.isMobile().subscribe((result) => {
+    this.breakpointSub = this.breakpointService.isMobile().subscribe((result) => {
       this.isMobile = result.matches;
     }); 
   }
@@ -116,7 +117,8 @@ export class VideoDetailComponent {
    * Unsubscribes from route parameter updates.
    */
   ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
+    this.routeSub?.unsubscribe();
+    this.breakpointSub?.unsubscribe();
   }
 
   /**
