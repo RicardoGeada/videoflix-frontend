@@ -47,4 +47,5 @@ jobs:
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: dist/videoflix-frontend/browser/
+        server-dir: ${{ secrets.FTP_DIR }}
         
