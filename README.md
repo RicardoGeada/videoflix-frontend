@@ -1,4 +1,29 @@
-# VideoflixFrontend
+# Videoflix Frontend
+
+This is the frontend of a full-stack video streaming platform inspired by Netflix.
+
+---
+
+## About
+
+This **Videoflix Frontend** is part of a full-stack video streaming platform that allows users to:
+- Create an account
+- Log in to their account
+- Stream Videos
+
+This frontend connects to a backend API to handle user data, authentication, and video streaming functionalities.
+[Videoflix Backend](https://github.com/RicardoGeada/videoflix-backend)
+
+---
+
+## Screenshots
+
+![Home Page](src/assets/screenshots/home-page.jpg)
+![Browse Page](src/assets/screenshots/browse-page.jpg)
+![Video Detail](src/assets/screenshots/video-detail.jpg)
+![Video Player](src/assets/screenshots/video-player.jpg)
+
+---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
 
