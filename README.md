@@ -6,19 +6,21 @@ This is the frontend of a full-stack video streaming platform inspired by Netfli
 
 ## About
 
-This **Videoflix Frontend** is part of a full-stack video streaming platform that allows users to:
-- Create an account
-- Log in to their account
-- Stream Videos
+This **Videoflix Frontend** is part of a full-stack video streaming platform that provides the following **features**:
+- **User Management**: Registration, login and password reset.
+- **Video Streaming**: Stream videos through a responsive and customizable player powered by [Video.js](https://videojs.com/).
+- **Responsive Design**: Optimized for both desktop and mobile devices.
 
 This frontend connects to a backend API to handle user data, authentication, and video streaming functionalities.
-[Videoflix Backend](https://github.com/RicardoGeada/videoflix-backend)
+For the backend implementation, see the [Videoflix Backend](https://github.com/RicardoGeada/videoflix-backend).
 
 ---
 
 ## Screenshots
 
 ![Home Page](src/assets/screenshots/home-page.jpg)
+![Signup Page](src/assets/screenshots/signup-page.jpg)
+![Login Page](src/assets/screenshots/login-page.jpg)
 ![Browse Page](src/assets/screenshots/browse-page.jpg)
 ![Video Detail](src/assets/screenshots/video-detail.jpg)
 ![Video Player](src/assets/screenshots/video-player.jpg)
